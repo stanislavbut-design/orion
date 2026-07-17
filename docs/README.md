@@ -1,8 +1,8 @@
 # Orion Documentation
 
-> **Version:** 0.1 (Foundation)
+> **Version:** 1.0 (Foundation)
 >
-> **Status:** Approved (Revision 1)
+> **Status:** Approved
 
 ---
 
@@ -20,7 +20,7 @@ The primary objective of Orion is not merely to record business data, but to aut
 
 # Documentation Structure
 
-The documentation is organised into the following sections.
+The documentation is organized into the following sections.
 
 ## Architecture
 
@@ -76,17 +76,17 @@ Describes the planned evolution of Orion from the current foundation towards fut
 
 # Documentation Principles
 
-The documentation is maintained together with the source code.
+1. The documentation is maintained together with the source code.
 
-Every significant architectural decision should be documented.
+2. Every significant architectural decision should be documented.
 
-Business terminology should remain consistent across all documents.
+3. Business terminology should remain consistent across all documents.
 
-Architecture documents describe concepts rather than implementation details.
+4. Architecture documents describe concepts rather than implementation details.
 
-Implementation details belong to developer documentation.
+5. Implementation details belong to developer documentation.
 
-The documentation should evolve together with the software and always reflect the current state of the project.
+6. The documentation should evolve together with the software and always reflect the current state of the project.
 
 ---
 

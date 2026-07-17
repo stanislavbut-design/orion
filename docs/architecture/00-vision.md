@@ -1,92 +1,54 @@
-\# ARCH-00 — Vision
-
-
+# ARCH-00 — Vision
 
 | Property | Value |
-
 |----------|-------|
-
 | Document ID | ARCH-00 |
-
 | Title | Vision |
-
-| Status | Approved (Revision 1) |
-
-| Version | 0.1 |
-
+| Status | Approved |
+| Version | 1.0 |
 | Owner | Orion Project |
-
 | Last Updated | 2026-07-14 |
-
 | Related ADRs | None |
-
 | Replaces | — |
-
 | Superseded By | — |
 
-
-
-\---
+---
 
 
 
-\# Purpose
-
-
+# Purpose
 
 Orion is a modular business management platform designed for service-oriented businesses and business groups.
 
-
-
 Its purpose is to support the complete lifecycle of service delivery, from client acquisition through service execution to financial reporting and data integration within a single, coherent system built on a common business model.
 
-
-
-\---
-
-
-
-\# Vision
+---
 
 
 
-Orion aims to become a comprehensive platform that enables organisations to manage their business using accurate, consistent and integrated information.
+# Vision
 
+Orion aims to become a comprehensive platform that enables organizations to manage their business using accurate, consistent and integrated information.
 
-
-The platform is designed to minimise duplication of data, automate repetitive processes and support informed decision-making through reliable reporting and analytics.
-
-
+The platform is designed to minimize duplication of data, automate repetitive processes and support informed decision-making through reliable reporting and analytics.
 
 Rather than focusing on individual software modules, Orion focuses on the business processes that connect them.
 
+---
 
-
-\---
-
-
-
-\# Scope
-
-
+# Scope
 
 The initial release focuses on the core business capabilities required to support service-oriented businesses, including customer management, service delivery, finance, human resources, reporting and data integration.
 
-
-
 The detailed module architecture is described in ARCH-07.
-
-
 
 The architecture intentionally allows additional business modules to be introduced without requiring changes to the platform itself.
 
-
-
-\---
+---
 
 
 
-\# Design Goals
+# Design Goals
 
 
 
@@ -94,29 +56,29 @@ The primary goals of Orion are:
 
 
 
-\- Business-first architecture
+- Business-first architecture
 
-\- Modular design
+- Modular design
 
-\- Strong data integrity
+- Strong data integrity
 
-\- Automation of business processes
+- Automation of business processes
 
-\- Reliable reporting
+- Reliable reporting
 
-\- Extensibility
+- Extensibility
 
-\- Maintainability
+- Maintainability
 
-\- Long-term scalability
-
-
-
-\---
+- Long-term scalability
 
 
 
-\# Target Users
+---
+
+
+
+# Target Users
 
 
 
@@ -124,21 +86,21 @@ The primary users of Orion are:
 
 
 
-\- Professional service businesses
+- Professional service businesses
 
-\- Business groups consisting of multiple legal entities
+- Business groups consisting of multiple legal entities
 
-\- Other service-oriented businesses
+- Other service-oriented businesses
 
-\- Small and medium-sized organisations requiring integrated business management
-
-
-
-\---
+- Small and medium-sized organizations requiring integrated business management
 
 
 
-\# Non-Goals
+---
+
+
+
+# Non-Goals
 
 
 
@@ -150,11 +112,11 @@ Instead, it focuses on delivering a coherent, extensible platform tailored to it
 
 
 
-\---
+---
 
 
 
-\# Long-Term Vision
+# Long-Term Vision
 
 
 
