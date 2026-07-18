@@ -6,7 +6,7 @@
 |----------|-------|
 | Document ID | ARCH-03 |
 | Title | Domain Model |
-| Status | Draft |
+| Status | Approved |
 | Version | 1.0 |
 | Owner | Orion Project |
 | Last Updated | 2026-07-17 |

@@ -1,44 +1,24 @@
-ID          Title                           Status
+# Architecture
 
-----------------------------------------------------------
+## Purpose
 
-README      Documentation Home             Approved
+Describe Orion's target architecture.
 
-GLOSSARY    Term Definitions               Draft
+## Documents
 
+| Code | Title | Status | Replaces | Superseded | File Reference |
+|------|-------|--------|----------|------------|----------------|
+| ARCH-000 | Vision | Approved | | | ARCH-00-vision.md
+| ARCH-001 | Engineering Principles | Approved | | | ARCH-01-principles.md
+| ARCH-002 | Platform Architecture | Planned ||| ARCH-02-platform.md
+| ARCH-003 | Domain Model | Approved ||| ARCH-03-domain-model.md
+| ARCH-004 | Repository Structure | Approved ||| ARCH-04-repository-structure.md
+| ARCH-999 | Design Philosophy | Approved ||| ARCH-99-design-philosophy.md
 
+## Related Sections
 
-ARCH-00     Vision                         Approved
+ADR
 
-ARCH-01     Engineering Principles         Approved
+Standards
 
-ARCH-02     Platform Architecture          Planned
-
-ARCH-03     Domain Model                   Draft
-
-ARCH-04     Ownership Model                Planned
-
-ARCH-05     Security & Identity            Planned
-
-ARCH-06     Internationalization           Planned
-
-ARCH-07     Module Architecture            Planned
-
-ARCH-08     Development Standards          Planned
-
-
-
-ADR-001     Technology Stack               Planned
-
-ADR-002     Modular Architecture           Planned
-
-ADR-003     Organization–Company Model     Planned
-
-
-
-MOD-ADM     Administration Module          Planned
-
-MOD-CRM     CRM Module                     Planned
-
-MOD-FIN     Finance Module                 Planned
-
+Development

@@ -95,3 +95,20 @@ Describes the planned evolution of Orion from the current foundation towards fut
 When introducing new functionality, contributors are expected to update the relevant documentation as part of the same change.
 
 No feature is considered complete until its implementation, tests and documentation are consistent.
+
+# Orion Documentation
+
+## Architecture
+    → architecture/index.md
+
+## Architecture Decision Records
+    → adr/index.md
+
+## Development Standards
+    → standards/index.md
+
+## Development Process
+    → development/index.md
+
+## Glossary
+    → glossary/Glossary.md
