@@ -63,11 +63,12 @@ Orion now has a stable architectural and conceptual foundation from which implem
 
 | Milestones | Commits | Reference Doc |
 |----------|-------|----------|
-| Milestone 1.1 - Master Data Foundation |   | M01-1-masterdata-foundation |
-| Milestone 1.2 - Role Framework |   | M01-2-role-framework |
-| Milestone 1.3 - Business Relationships |   | M01-3-business-relationships |
-| Milestone 1.4 - Contact Information |   | M01-4-contact-info |
-| Milestone 1.5 - Core Services |   | M01-5-core-services |
+| Milestone 1.1 - Master Data Foundation | S01-M01.01.01 Master Data Foundation   | S01-M01-01-masterdata-foundation |
+|                                        | S01-M01.01.02 Organize masterdata application structure ||
+| Milestone 1.2 - Role Framework |   | S01-M01-02-role-framework |
+| Milestone 1.3 - Business Relationships |   | S01-M01-03-business-relationships |
+| Milestone 1.4 - Contact Information |   | S01-M01-04-contact-info |
+| Milestone 1.5 - Core Services |   | S01-M01-05-core-services |
 
 ## Objective
 

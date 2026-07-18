@@ -99,6 +99,8 @@ Commits document implementation history.
 
 A commit shall leave the project in a consistent and working state.
 
+Commit messages shall follow the convention defined in STD-003 — Git. Each commit should normally correspond to a single completed Step and reference its associated Stage and Milestone.
+
 ---
 
 ### Working state
@@ -168,6 +170,13 @@ Implementation affecting architecture, standards, or development practices shall
 ### Verification
 
 Each completed milestone shall be verified against its acceptance criteria.
+
+A Step shall be considered complete only when:
+
+- The implementation satisfies the approved entity specification.
+- All applicable business rules are enforced, or explicitly deferred with documented justification.
+- The project passes verification (tests, migrations, system checks, etc.).
+- The implementation is committed according to the Git convention defined in STD-003.
 
 ---
 

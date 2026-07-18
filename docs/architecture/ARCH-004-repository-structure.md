@@ -108,34 +108,22 @@ apps/
 ```text
 masterdata/
 │
-├── migrations/
+├── __init__.py
 ├── admin.py
 ├── apps.py
-├── urls.py
+├── views.py
+│
+├── migrations/
+│   └── __init__.py
 │
 ├── models/             is split into focused modules
 │   ├── __init__.py
-│   ├── party.py
-│   ├── role.py
-│   ├── address.py
-│   ├── contact.py
-│   └── common.py
-│
-├── services/           starts empty but is ready when business logic outgrows the models.
-│
-├── managers/
-│
-├── queries/            is reserved for reusable query logic, keeping models lean
-│
-├── validators/         centralizes validation logic
-│
-├── choices/            holds reusable enumerations
 │
 ├── tests/
+│   └── __init__.py9
 │
-├── views/
-│
-└── templates/
+├── templates/
+└── static/
 ```
 ---
 
