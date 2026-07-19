@@ -11,8 +11,12 @@ class Organization(models.Model):
     An Organization is the highest-level identity in the Orion domain model.
     It defines the ownership boundary for all Parties and Persons.
     """
-    SINGLETON_ERROR = (
+    ORG_SINGLETON_ERROR = (
         "Exactly one Organization may exist in an Orion installation."
+    )
+
+    ORG_DELETE_ERROR = (
+        "The Organization cannot be deleted."
     )
 
     # Duplicated intentionally.
@@ -38,11 +42,16 @@ class Organization(models.Model):
         super().clean()
 
         if not self.pk and Organization.objects.exists():
-            raise ValidationError(self.SINGLETON_ERROR)
+            raise ValidationError(self.ORG_SINGLETON_ERROR)
 
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
+    
+    def delete(self, *args, **kwargs):
+        raise ValidationError(
+            self.ORG_DELETE_ERROR
+        )
 
     def __str__(self) -> str:
         return self.name

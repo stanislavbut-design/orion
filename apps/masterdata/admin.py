@@ -21,3 +21,9 @@ class OrganizationAdmin(admin.ModelAdmin):
     ordering = (
         "name",
     )
+
+    def has_add_permission(self, request):
+        return not Organization.objects.exists()
+    
+    def has_delete_permission(self, request, obj=None):
+        return False
