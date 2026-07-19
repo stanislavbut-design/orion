@@ -116,16 +116,30 @@ flowchart TD
 
 ## Identity
 
+The Identity model defines the fundamental business identities recognised by Orion and the relationships between them.
+
 An **Identity** represents something that exists independently and has its own lifecycle.
 
 An Identity remains the same even if the roles it performs, the relationships it participates in, or the business activities it undertakes change over time.
+
+An Identity is independent of business processes. Roles, business relationships and business objects reference identities rather than defining them.
 
 **Examples:**
 
 - Organization
 - Party
 - Person
+- Identity Relationship
 
+``` text
+Identity
+├── Organization
+├── Party
+├── Person
+└── Identity Relationships
+      ├── Embodiment
+      └── Representation
+```
 ---
 
 ## Role
@@ -395,110 +409,23 @@ This principle now underpins the entire Orion domain model.
 
 ## Organization
 
-
-
-### Concept Summary
-
-
-
-| Property | Value |
-|----------|-------|
-| Scope | Global |
-| Owned By | None |
-| Owns | Party, Person, Business Process |
-| Lifecycle | Infinite |
-| Primary Module | Core |
-
-
-
-### Definition
-
-An Organization represents the highest-level operational boundary within Orion.
-
-It models a business group operating as a single economic subject. An Organization defines the scope within which business data, users, business processes and reporting are managed.
-
-An Organization is not necessarily a legal entity.
-
 ### Purpose
 
 The Organization establishes the highest boundary for ownership, security, configuration and management reporting. All business concepts managed by Orion belong to exactly one Organization.
 
-### Responsibilities
+### Definition
 
-* Defines the operational boundary.
-* Owns Parties.
-* Owns Persons.
-* Owns business processes.
-* Defines management reporting boundaries.
-* Defines security boundaries.
-* Provides the context in which all business activities take place.
+An **Organization** represents the business as a whole.
 
+It defines the scope within which all business identities, business processes and business objects exist.
 
-### Relationships
+An Organization is not necessarily a legal entity.
 
-
-
-**Owns:**
-
-
-
-* Party
-* Person
-* Business Process
-
-**References:**
-
-- Users
-- Reference Data
-
-**Referenced by:**
-
-* Assignments
-* Reporting
-* Finance
-
-
-
-### Business Rules
-
-
-
-**ORG-001**
-
-
-
-Every Party belongs to exactly one Organization.
-
-
-
-**ORG-002**
-
-
-
-Every Person belongs to exactly one Organization.
-
-
-**ORG-003**
-
-Every Business Process belongs to exactly one Organization.
-
-**ORG-004**
-
-Organization-level master data is available throughout the Organization.
-
-**ORG-005**
-
-Organizations are completely isolated from one another. Business data shall never be shared directly between Organizations.
-
-
-### Examples
-
-
-
-* Orion Consulting Group
-* ABC Engineering Group
-
-
+Characteristics:
+- Exactly one Organization exists within an Orion installation.
+- An Organization owns Parties and Persons.
+- The Organization exists for the lifetime of the installation.
+- The Organization name may be changed, but the Organization itself cannot be replaced or deleted.
 
 ### Implementation Notes
 
@@ -510,127 +437,22 @@ Business concepts owned by an Organization shall not be shared across Organizati
 
 Organization should remain stable throughout the lifetime of the business.
 
-
-
 ---
-
-
 
 ## Party
 
+### Purpose
 
-
-### Concept Summary
-
-
-
-| Property | Value |
-|----------|-------|
-| Scope | Organization |
-| Owned By | Organization |
-| Owns | Role-specific business data |
-| Lifecycle | Long-lived |
-| Primary Module | Core |
-
+A Party is the business identity through which Orion interacts with other business subjects.
 
 ### Definition
 
-
-
-A Party represents an identifiable business identity within an Organization. A Party may be a legal entity, an individual acting in a business capacity, or another type of organization with which the Organization interacts (such as a government authority, financial institution, or non-profit organization).
-
-
+A **Party** represents an identifiable business identity participating in, or interacting with, business activities of the Organization. A Party may be a legal entity, an individual acting in a business capacity, or another type of organization with which the Organization interacts (such as a government authority, financial institution, or non-profit organization).
 
 A Party exists independently of the roles it performs and provides a stable identity throughout its lifecycle.
 
-
-
 The Party concept allows Orion to represent business participants without duplicating identity information when a participant performs multiple business roles.
 
-
-
-### Responsibilities
-
-* Maintains the identity of a business participant.
-* Serves as the owner of role-specific business information.
-* Supports multiple simultaneous business roles.
-* Provides a stable reference for business relationships.
-
-
-
-### Relationships
-
-
-
-**Belongs to:**
-
-
-
-Organization
-
-
-
-**Owns:**
-
-
-
-* Company Role
-* Customer Role
-* Supplier Role
-* Partner Role
-
-
-
-**Referenced by:**
-
-
-
-* Contracts
-* Documents
-* Assignments
-* Financial Transactions
-
-
-
-### Business Rules
-
-
-
-**PTY-001**
-
-
-
-Every Party belongs to exactly one Organization.
-
-
-
-**PTY-002**
-
-
-
-A Party may perform zero or more business roles.
-
-
-
-**PTY-003**
-
-
-
-A Party shall have only one identity within an Organization.
-
-
-
-**PTY-004**
-
-Business roles may be added or removed without affecting the identity of the Party.
-
-### Examples
-
-* Orion Consulting Ltd.
-* Orion Services LLC.
-* First National Bank
-* Ministry of Finance
-* John Doe (independent consultant)
 
 ### Implementation Notes
 
@@ -639,6 +461,92 @@ Party represents business identity rather than business behavior.
 Role-specific data should belong to the corresponding business role rather than to the Party itself.
 
 The Party concept shall remain independent of individual business modules to ensure extensibility.
+
+---
+
+## Person
+
+### Purpose
+
+A Person is the business identity through which Orion interacts with individuals.
+
+### Definition
+
+A **Person** represents an individual known to Orion.
+
+A Person is structurally independent of any particular Party and may be associated with one or more Parties through Identity Relationships.
+
+A Person represents the individual, whereas a Party represents the business identity through which that individual participates in business.
+
+Examples include:
+- employees;
+- sole traders;
+- company directors;
+- accountants;
+- customer contacts;
+- supplier representatives.
+
+A Person may exist even when not currently associated with any Party.
+
+---
+
+## Identity Relationships
+
+### Purpose
+
+Identity Relationships define structural associations between identities independently of any business process.
+
+### Embodiment
+
+Embodiment associates a **Party** of type *Individual* with the **Person** whom it represents.
+
+Characteristics:
+- mandatory for Parties of type *Individual*;
+- exactly one associated Person;
+- immutable throughout the lifetime of the Party.
+
+Example:
+```text
+Party (John Smith Trading)
+        │
+        └── embodies
+                │
+                ▼
+          Person (John Smith)
+```
+### Association
+
+Association associates a **Party** with one or more **Persons** with a specified function.
+
+Examples include:
+- Director
+- Accountant
+- Sales Contact
+- Legal Representative
+
+Characteristics:
+- optional;
+- many-to-many;
+- time-dependent;
+- historical.
+
+```text
+Party (ABC Ltd.)
+        │
+        ├── Director ─────► John Smith
+        ├── Accountant ───► Mary Brown
+        └── Contact ──────► Peter White
+```
+### Relationship to Business Relationships
+
+Identity Relationships describe how identities are structurally associated.
+
+Business Relationships describe commercial or organisational relationships between business participants.
+
+The two concepts are independent and shall not be confused.
+
+
+
 
 ## Concept Modeling Procedure
 

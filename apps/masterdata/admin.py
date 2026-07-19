@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Organization
+from .models import Organization, Party
 
 
 @admin.register(Organization)
@@ -27,3 +27,41 @@ class OrganizationAdmin(admin.ModelAdmin):
     
     def has_delete_permission(self, request, obj=None):
         return False
+    
+@admin.register(Party)
+class PartyAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "legal_name",
+        "party_type",
+        "party_code",
+        "business_id",
+    )
+
+    list_filter = (
+        "party_type",
+    )
+
+    search_fields = (
+        "name",
+        "legal_name",
+        "business_id",
+    )
+
+    readonly_fields = (
+        "public_id",
+    )
+
+    exclude = (
+        "organization",
+    )   
+
+    ordering = (
+        "name",
+    )
+
+    def save_model(self, request, obj, form, change):
+        if obj.organization_id is None:
+            obj.organization = Organization.objects.get()
+
+        super().save_model(request, obj, form, change)

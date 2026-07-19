@@ -11,7 +11,7 @@ Add it to INSTALLED_APPS.
 Verify the application starts correctly.
 
 
-### 1. Create the application
+### Task 1. Create the application
 
 From the repository root:
 
@@ -39,7 +39,7 @@ apps/
 ```
 ---
 
-### 2. Configure `apps.py`
+### Task 2. Configure `apps.py`
 
 Verify it contains:
 
@@ -51,7 +51,7 @@ class MasterdataConfig(AppConfig):
     name = "apps.masterdata"
 ```
 
-### 3. Register the application
+### Task 3. Register the application
 
 In `config/settings.py`
 
@@ -61,7 +61,7 @@ add:
 
 to INSTALLED_APPS.
 
-### 4. Verify
+### Task 4. Verify
 
 Run:
 
@@ -77,7 +77,7 @@ Run:
 
 The server should start normally.
 
-### 5. Verify Git
+### Task 5. Verify Git
 
 `git status`
 
@@ -95,7 +95,9 @@ modified: config/settings.py
 No migrations should exist yet except the empty migrations/__init__.py.
 
 
-**Commit 1:** S01-M01.01.01 Master Data Foundation
+### Commit 1:
+
+S01-M01.01.01 Master Data Foundation
 
 ---
 
@@ -107,7 +109,7 @@ Transform the default Django application into Orion's standard application layou
 
 The goal is not to add functionality yet, but to establish a scalable structure that all future applications can follow.
 
-### 1. Models package
+### Task 1. Models package
 
 Instead of:
 
@@ -120,7 +122,7 @@ models/
     __init__.py
 ```
 
-### 2. Tests package
+### Task 2. Tests package
 
 Likewise:
 
@@ -137,22 +139,24 @@ Create:
     ├── templates/
     └── static/
 ```
-**Commit 2:** S01-M01.01.02 Organize masterdata application structure
+### Commit 2
+
+S01-M01.01.02 Organize masterdata application structure
 
 ---
 
-## Step 3 — Implement `Organization`
+## Step 3 — Implement `Organization` ✅ COMPLETED
 
 ### Objective
 
-Implement the Organization entity in accordance with:
+Implement the Organization entity and enforce its lifecycle in accordance with:
 - ARCH-003 — Domain Model
 - ADR-007 — Entity Identification
 - `docs/modules/masterdata/organization.md`
 
 At this step, we should implement only what the specification requires—no speculative fields or future-proofing beyond our approved architecture.
 
-### 1. Create the model
+### Task 1. Create the model
 
 Create: `apps/masterdata/models/organization.py`
 
@@ -224,7 +228,7 @@ class Organization(models.Model):
         return self.name
 ```
 
-### 2. Export the model:
+### Task 2. Export the model:
 
 ***apps/masterdata/models/__init__.py***
 
@@ -237,7 +241,7 @@ __all__ = [
 ```
 
 
-### 3. Register in Django Admin
+### Task 3. Register in Django Admin
 
 ***apps/masterdata/admin.py***
 
@@ -267,7 +271,7 @@ class OrganizationAdmin(admin.ModelAdmin):
     )
 ```
 
-### 4. Generate the migration
+### Task 4. Generate the migration
 
 ```
 python manage.py makemigrations masterdata
@@ -282,7 +286,7 @@ Then:
 python manage.py migrate
 ```
 
-### 5. Verify
+### Task 5. Verify
 
 Run:
 ```
@@ -298,33 +302,255 @@ Open Django Admin and verify that:
 - `public_id` is read-only.
 - The object is displayed by its name.
 
-7. Commit
+### Commit 3
+
 S01-M01.01.03 Implement Organization
 
 
+## Step 4 — Complete Organization lifecycle ✅ COMPLETED
+
+### Objective
+
+Implement the remaining business rules governing the Organization lifecycle.
+
+### Task 1 — Prevent creating additional Organizations from the Admin
+
+Add to ***apps/masterdata/admin.py***
+```
+def has_add_permission(self, request):
+    from .models import Organization
+    return not Organization.objects.exists()
+```
+### Task 2 — Prevent deletion from the Admin
+
+Still in `OrganizationAdmin`, add:
+```
+def has_delete_permission(self, request, obj=None):
+    return False
+```
+
+### Task 3 — Prevent deletion in the model
+
+Open:
+
+***apps/masterdata/models/organization.py***
+
+Add:
+```
+def delete(self, *args, **kwargs):
+    raise ValidationError(
+        "The Organization cannot be deleted."
+    )
+```
+### Task 4 — Create a data migration
+
+Generate an empty migration:
+
+`python manage.py makemigrations masterdata --empty --name create_default_organization`
+
+You'll get something like:
+
+`apps/masterdata/migrations/0002_create_default_organization.py`
+
+Edit it to create the default record using RunPython. This ensures every new Orion installation starts with exactly one Organization. 
+```
+from uuid import uuid4
+
+from django.db import migrations
 
 
-**Commit 3:**
+def create_default_organization(apps, schema_editor):
+    Organization = apps.get_model("masterdata", "Organization")
+
+    if not Organization.objects.exists():
+        Organization.objects.create(
+            public_id=uuid4(),
+            name="New Organization",
+        )
+
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ("masterdata", "0001_initial"),
+    ]
+
+    operations = [
+        migrations.RunPython(
+            create_default_organization,
+            # The Organization is part of the installation's
+            # structural state and is therefore not removed on rollback.
+            migrations.RunPython.noop,
+        ),
+    ]
+```
+
+### Task 5 — Verify
+
+After applying migrations:
+
+`python manage.py migrate`
+
+Check that:
+- Exactly one Organization exists.
+- The Add button is gone.
+- There is no Delete button.
+- The name remains editable.
+
+### Commit 4
+
+S01-M01.01.04 Complete Organization lifecycle
+
+
 
 ---
 
-## Step 4 — Implement `Party`
+## Step 5 — Implement `Party`
 
-Create the second Identity entity.
+### Objective
 
-Initially, only the structural attributes.
+Implement the foundational Party entity.
 
-Register it.
+### Task 1. Entity specification
 
-Generate and apply the migration.
+Update `Party.md` with the agreed refinements.
+- Purpose
+- Definition
+- Conceptual Diagrams
+- Responsibilities
+- Identity
+- Lifecycle
+- Relationships
+- Business Rules
+- Planned Attributes
+- Notes
+- Related Documents
 
-Verify.
+### Task 2. Create the model
 
-**Commit 4:**
+`apps/masterdata/models/party.py`
+
+```
+import uuid
+
+from django.core.exceptions import ValidationError
+from django.db import models
+from django.db.models import Q
+from .organization import Organization
+
+PTY_EMPTY_PERSON_ERROR = (
+        "A Party must have at least one Person associated with it."
+    )
+
+class PartyTypes(models.TextChoices):
+    LEGAL_ENTITY = "LEGAL_ENTITY", "Legal Entity"
+    INDIVIDUAL = "INDIVIDUAL", "Individual"
+
+class Party(models.Model):
+
+    # Duplicated intentionally.
+    # A common base entity will be introduced only after shared
+    # attributes have been validated across multiple domain entities.
+    id = models.BigAutoField(
+        primary_key=True,
+    )
+        
+    public_id = models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        editable=False,
+    )
+
+    organization = models.ForeignKey(
+        Organization,
+        on_delete=models.PROTECT,
+        related_name="parties",
+    )
+
+    name = models.CharField(
+        max_length=60,
+        unique=True,
+    )
+
+    legal_name = models.CharField(
+        max_length=200,
+        blank=True,
+    )
+
+    party_type = models.CharField(
+        max_length=20,
+        choices=PartyTypes.choices,
+        default=PartyTypes.LEGAL_ENTITY,
+    )
+
+    business_id = models.CharField(
+        max_length=20,
+        blank=False,
+    )
+
+    party_code = models.CharField(
+        max_length=10,
+        blank=True,
+    )
+
+    class Meta:
+        ordering = ["name"]
+        verbose_name = "Party"
+        verbose_name_plural = "Parties"
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["organization", "party_code"],
+                name="uq_party_party_code",
+            ),
+            
+            models.CheckConstraint(
+                condition=Q(party_type__in=[
+                    PartyTypes.LEGAL_ENTITY,
+                    PartyTypes.INDIVIDUAL,
+                ]),
+                name="chk_party_party_type",
+            ),
+        ]
+
+    def __str__(self) -> str:
+        return self.name
+```
+### Task 3. Register in the admin
+
+Initially:
+- list display:
+    - name
+    - party_type
+    - legal_name
+    - business_id
+    - party_code
+-search:
+    - name
+    - legal_name
+    - business_id
+
+### Task 4. Create and apply migrations
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+### Task 5. Test in the admin
+
+Create at least:
+
+- one legal entity;
+- one sole trader (Party type = Person).
+
+At this stage, the embodied Person doesn't exist yet—that will come in the next milestone.
+
+
+
+**Commit 5:**
 
 ---
 
-## Step 5 — Implement `Person`
+## Step 6 — Implement `Person`
 
 Create the third Identity entity.
 
@@ -334,11 +560,11 @@ Generate and apply the migration.
 
 Verify.
 
-**Commit 5:**
+**Commit 6:**
 
 ---
 
-## Step 6 — Review
+## Step 7 — Review
 
 Review:
 
@@ -351,6 +577,6 @@ Review:
 
 Perform any required cleanup.
 
-**Commit 6:**
+**Commit 7:**
 
 

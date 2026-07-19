@@ -8,6 +8,8 @@ An Organisation identifies the Orion installation.
 
 An Organization represents the entire business managed by an Orion installation.
 
+The Organization is not business data; it is part of the system configuration.
+
 ## 3. Responsibilities
 
 An Organization:
@@ -24,7 +26,7 @@ An Organization:
 ## 5. Lifecycle
 
 An Organization:
-- created once;
+- created once upon installation;
 - never deleted;
 - name may change.
 
@@ -38,20 +40,27 @@ Organization
 
 ## 7. Business Rules
 
-**ORG-001**
+### ORG-001
 Exactly one Organization shall exist in an Orion installation.
 
-**ORG-002**
-An Organization owns all Parties.
+### ORG-002
+The Organization shall be created during installation.
 
-**ORG-003**
-An Organization owns all Persons.
+### ORG-003
+Users shall not create additional Organizations.
 
-**ORG-004**
-An Organization shall not be deleted.
+### ORG-004
+Users shall not delete the Organization.
 
-**ORG-005**
+### ORG-005
+
+Organizations are completely isolated from one another. Business data shall never be shared directly between Organizations.
+
+### ORG-006
+
 The Organization name may be changed.
+
+---
 
 ## 8. Planned Attributes
 
@@ -61,7 +70,7 @@ The Organization name may be changed.
 
 ## 9. Notes
 
-Future multi-organization support
+An Organisation is necessary for organising a multi-organization support in the future.
 
 ## 10. Related Documents
 

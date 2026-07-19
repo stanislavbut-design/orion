@@ -140,36 +140,7 @@ Standards
 Development
 
 
-**Entity Specifications**
 
-# Entity
-
-## 1. Purpose
-
-## 2. Definition
-
-## 3. Responsibilities
-
-## 4. Identity
-
-| Attribute | Notes         |
-| --------- | ------------- |
-| Name      | Business name |
-
-## 5. Lifecycle
-
-## 6. Relationships
-
-## 7. Business Rules
-
-## 8. Planned Attributes
-
-| Attribute | Required | Description |
-| --------- | -------- | ----------- |
-
-## 9. Notes
-
-## 10. Related Documents
 
 
 **Statuses**
