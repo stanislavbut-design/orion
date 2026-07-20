@@ -3,13 +3,11 @@ import uuid
 from django.core.exceptions import ValidationError
 from django.db import models
 
-ORG_SINGLETON_ERROR = (
-        "Exactly one Organization may exist in an Orion installation."
-    )
+from apps.core.constants.validation import (
+    ORG_SINGLETON_ERROR,
+    ORG_DELETE_ERROR,
+)
 
-ORG_DELETE_ERROR = (
-        "The Organization cannot be deleted."
-    )
 class Organization(models.Model):
     """
     Represents the entire business managed by an Orion installation.

@@ -544,21 +544,36 @@ Create at least:
 
 At this stage, the embodied Person doesn't exist yet—that will come in the next milestone.
 
+### Commit 5:
 
-
-**Commit 5:**
+S01-M01.01.05 Implement Party
 
 ---
 
 ## Step 6 — Implement `Person`
 
-Create the third Identity entity.
+### Objective
 
-Register it.
+Implement the foundational Person entity.
 
-Generate and apply the migration.
+### Task 1. Create the Person Specification
 
-Verify.
+`docs/modules/masterdata/entities/person.md`
+
+### Task 2.  Implement the model
+
+Create:
+
+`apps/masterdata/models/person.py`
+
+### Task 3. Register in Django Admin
+
+Hide the Organization field and assign it automatically, exactly as we now do for Party.
+
+### Task 4. Create and apply migrations
+```
+python manage.py makemigrations
+python manage.py migrate
 
 **Commit 6:**
 

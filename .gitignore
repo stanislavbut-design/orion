@@ -38,3 +38,7 @@ dist/
 # Coverage
 .coverage
 htmlcov/
+
+# Excel
+*.xlsx
+*.xls

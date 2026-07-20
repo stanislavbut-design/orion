@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Organization, Party
+from .models import Organization, Party, Person
 
 
 @admin.register(Organization)
@@ -58,6 +58,42 @@ class PartyAdmin(admin.ModelAdmin):
 
     ordering = (
         "name",
+    )
+
+    def save_model(self, request, obj, form, change):
+        if obj.organization_id is None:
+            obj.organization = Organization.objects.get()
+
+        super().save_model(request, obj, form, change)
+
+@admin.register(Person)
+class PersonAdmin(admin.ModelAdmin):
+    list_display = (
+        "full_name",
+        "short_name",
+        "personal_id",
+    )
+
+    search_fields = (
+        "full_name",
+        "short_name",
+        "personal_id",
+    )
+
+    readonly_fields = (
+        "full_name",
+        "short_name",
+        "public_id",
+    )
+
+    exclude = (
+        "organization",
+    )   
+
+    ordering = (
+        "last_name",
+        "first_name",
+        "middle_name",
     )
 
     def save_model(self, request, obj, form, change):

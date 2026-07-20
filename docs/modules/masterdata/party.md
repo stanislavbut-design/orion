@@ -37,7 +37,8 @@ Organization
              ▼
            Party
 ```
-Section 3 can simply contain multiple diagrams, each with a short title, for example:
+
+
 
 ### Role Assignment
 ```text
@@ -101,13 +102,13 @@ Deletion policy will be defined separately.
 
 ## 7. Relationships
 
-A Party:
-- belongs to exactly one Organization;
-- may own zero or more Role Assignments;
-- may participate in zero or more Business Relationships;
-- may be associated with zero or more Addresses;
-- may be associated with zero or more Contact Methods;
-- may be related to zero or more Persons.
+  A Party:
+  - belongs to exactly one Organization;
+  - may own zero or more Role Assignments;
+  - may participate in zero or more Business Relationships;
+  - may be associated with zero or more Addresses;
+  - may be associated with zero or more Contact Methods;
+  - may be related to zero or more Persons.
 
 ---
 

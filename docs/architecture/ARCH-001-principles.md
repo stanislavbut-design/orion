@@ -67,173 +67,88 @@ Stable business identities shall be modeled independently of the roles they perf
 
 # Principle 3 — Single Source of Truth
 
-
-
 Every business fact shall have one authoritative owner.
-
-
 
 Business rules, calculations, configuration and documentation shall each have one canonical implementation or definition.
 
-
-
 Information should never be duplicated solely for convenience.
 
-
-
 ---
-
-
 
 # Principle 4 — Explicit Ownership
 
-
-
 Every business entity shall have a clearly defined owner.
-
-
 
 Ownership determines:
 
-
-
 - lifecycle
-
 - permissions
-
 - visibility
-
 - responsibility
-
 - data integrity
-
-
 
 Ownership may be direct or derived, but it must always be unambiguous.
 
-
-
 ---
-
-
 
 # Principle 5 — Separation of Responsibilities
 
-
-
 Each module is responsible for a clearly defined business capability.
-
-
 
 Modules communicate through well-defined interfaces.
 
-
-
 Business capabilities should not overlap unnecessarily.
-
-
 
 Infrastructure services should remain separate from business functionality.
 
-
-
 ---
-
-
 
 # Principle 6 — Modular Architecture
 
-
-
 Orion is designed as a collection of cooperating modules built on a shared platform.
-
-
 
 Modules should be:
 
-
-
 - cohesive
-
 - loosely coupled
-
 - independently maintainable
-
 - reusable where practical
 
-
-
 ---
-
-
 
 # Principle 7 — Simplicity
 
-
-
 Prefer the simplest solution that satisfies both current and foreseeable business requirements.
-
-
 
 Complexity should only be introduced when it provides clear long-term value.
 
-
-
 ---
-
-
 
 # Principle 8 — Design for Evolution
 
-
-
 Orion is expected to evolve over many years.
-
-
 
 Architecture should accommodate new modules, integrations and business capabilities without requiring fundamental redesign.
 
-
-
 Extensibility is preferred over short-term optimization.
 
-
-
 ---
-
-
 
 # Principle 9 — Consistency
 
-
-
 Similar problems should be solved in similar ways.
-
-
 
 Naming, structure, behavior and user experience should remain consistent across the platform.
 
-
-
 Consistency reduces maintenance costs and improves usability.
-
-
 
 ---
 
-
-
 # Principle 10 — Data Integrity
-
-
 
 The database is the authoritative source of business information.
 
-
-
 Data integrity shall take precedence over convenience.
-
-
 
 Validation should occur as early as practical while ensuring that the database remains the final guardian of consistency.
 
@@ -249,19 +164,11 @@ This principle promotes loose coupling, traceability and extensibility across th
 
 ---
 
-
-
 # Principle 12 — Automation
-
-
 
 Business processes should be automated wherever practical.
 
-
-
 The objective of automation is to reduce repetitive work, minimize human error and improve consistency.
-
-
 
 Manual intervention should be required only where business judgement is necessary.
 
@@ -293,6 +200,11 @@ Premature optimization should be avoided.
 
 Performance improvements should be guided by measurement rather than assumption.
 
+---
+
+# Principle 16 - Materializing Derived Representations
+
+Whenever a business representation is deterministic and frequently queried, Orion may persist it as a derived attribute rather than recomputing it on demand.
 
 ---
 
