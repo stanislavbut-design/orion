@@ -67,6 +67,9 @@ Orion now has a stable architectural and conceptual foundation from which implem
 |                                        | S01-M01.01.02 Organize masterdata application structure ||
 |                                        | S01-M01.01.03 Implement Organization ||
 |                                        | S01-M01.01.04 Complete Organization lifecycle ||
+|                                        | S01-M01.01.05 Implement Party ||
+|                                        | S01-M01.01.06 Implement Person ||
+|                                        | S01-M01.01.07 Complete Milestone 1.1 ||
 | Milestone 1.2 - Role Framework |   | S01-M01-02-role-framework |
 | Milestone 1.3 - Business Relationships |   | S01-M01-03-business-relationships |
 | Milestone 1.4 - Contact Information |   | S01-M01-04-contact-info |

@@ -574,24 +574,47 @@ Hide the Organization field and assign it automatically, exactly as we now do fo
 ```
 python manage.py makemigrations
 python manage.py migrate
+```
+### Task 5. Test
 
-**Commit 6:**
+### Commit 6
+
+S01-M01.01.06 Implement Person
 
 ---
 
-## Step 7 — Review
+## Step 7 — Milestone Review
 
-Review:
+### Objectives
+- Organization implemented
+- Party implemented
+- Person implemented
+- Identity model established
+- Django Admin operational
+- Specifications synchronized with implementation
 
-- naming,
-- relationships,
-- admin,
-- migrations,
-- documentation.
+### Decisions made
 
+- One model per file.
+- Organization is a singleton.
+- Organization assigned automatically in Admin.
+- public_id on all business entities.
+- Store derived names (full_name, short_name).
+- Use named constants for validation and naming.
+- Current-state identities only; temporal history deferred.
+- Business rules drive validation.
 
-Perform any required cleanup.
+### Technical debt
 
-**Commit 7:**
+- Identity Relationships.
+- Address entity.
+- Contact Method entity.
+- Identity Document entity.
+- Temporal history.
+- Organization naming preferences.
+- Shared base entity.
 
+### Commit 7
+
+S01-M01.01.07 Complete Milestone 1.1
 
