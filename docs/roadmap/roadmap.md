@@ -63,17 +63,17 @@ Orion now has a stable architectural and conceptual foundation from which implem
 
 | Milestones | Commits | Reference Doc |
 |----------|-------|----------|
-| Milestone 1.1 - Master Data Foundation | S01-M01.01.01 Master Data Foundation   | S01-M01-01-masterdata-foundation |
+| Milestone 1.1 - Master Data Foundation | S01-M01.01.01 Master Data Foundation   | S01-M01-01-masterdata-foundation.md |
 |                                        | S01-M01.01.02 Organize masterdata application structure ||
 |                                        | S01-M01.01.03 Implement Organization ||
 |                                        | S01-M01.01.04 Complete Organization lifecycle ||
 |                                        | S01-M01.01.05 Implement Party ||
 |                                        | S01-M01.01.06 Implement Person ||
 |                                        | S01-M01.01.07 Complete Milestone 1.1 ||
-| Milestone 1.2 - Role Framework |   | S01-M01-02-role-framework |
-| Milestone 1.3 - Business Relationships |   | S01-M01-03-business-relationships |
-| Milestone 1.4 - Contact Information |   | S01-M01-04-contact-info |
-| Milestone 1.5 - Core Services |   | S01-M01-05-core-services |
+| Milestone 1.2 - Relationship Framework | S01-M01.02.01 Refine ARCH-003  | S01-M01-02-relationship-framework.md |
+| Milestone 1.3 - Business Relationships |   | S01-M01-03-business-relationships.md |
+| Milestone 1.4 - Contact Information |   | S01-M01-04-contact-info.md |
+| Milestone 1.5 - Core Services |   | S01-M01-05-core-services.md |
 
 ## Objective
 
@@ -86,7 +86,7 @@ Implement the foundational domain model and application structure defined by Ori
 - The Identity model is implemented.
 - The project is ready for subsequent business modules (CRM, Finance, HR, etc.).
 
-## Milestone 1.1 — Master Data Foundation
+## Milestone 1.1 — Master Data Foundation ✅ COMPLETED
 
 ### Objective
 
@@ -112,20 +112,24 @@ Create the `masterdata` application and implement the Identity framework.
 - Project starts without errors.
 
 
-## Milestone 1.2 — Role Framework
+## Milestone 1.2 — Business Relationships and Role Participation
 
-- RoleType
-- RoleAssignment
-- Initial role management
+### Objective
+
+Establish the conceptual and technical framework for modelling Business Relationships between Identities.
+
+
 
 ## Milestone 1.3 — Business Relationships
 - BusinessRelationship
 - Relationship types
 - Relationship management
+
 ## Milestone 1.4 — Contact Information
 - Address
 - ContactMethod
 - Validation and administration
+
 ## Milestone 1.5 — Core Services
 - Common managers
 - QuerySets

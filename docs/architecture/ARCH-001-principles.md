@@ -19,27 +19,15 @@
 
 # Purpose
 
-
-
 This document defines the engineering principles that guide the design, implementation and evolution of Orion.
-
-
 
 These principles provide a common framework for making architectural and implementation decisions. Whenever multiple technical solutions are possible, preference should be given to the solution that best aligns with these principles.
 
-
-
 Orion follows a concept-first design process. Business concepts are defined in the Glossary, organized in the Domain Model, and only then translated into software implementation.
-
-
 
 These principles are expected to remain stable throughout the lifetime of the project.
 
-
-
 ---
-
-
 
 # Principle 1 — Business First
 
@@ -63,9 +51,13 @@ Changes to the domain model shall be deliberate, documented and reviewed before 
 
 Stable business identities shall be modeled independently of the roles they perform. Roles describe how an identity participates in business processes and may change over time without affecting the underlying identity.
 
+# Principle 3 — Stable Architecture
+
+Architectural concepts should be introduced only when supported by multiple concrete business scenarios.
+
 ---
 
-# Principle 3 — Single Source of Truth
+# Principle 4 — Single Source of Truth
 
 Every business fact shall have one authoritative owner.
 
@@ -75,7 +67,7 @@ Information should never be duplicated solely for convenience.
 
 ---
 
-# Principle 4 — Explicit Ownership
+# Principle 5 — Explicit Ownership
 
 Every business entity shall have a clearly defined owner.
 
@@ -91,7 +83,7 @@ Ownership may be direct or derived, but it must always be unambiguous.
 
 ---
 
-# Principle 5 — Separation of Responsibilities
+# Principle 6 — Separation of Responsibilities
 
 Each module is responsible for a clearly defined business capability.
 
@@ -103,7 +95,7 @@ Infrastructure services should remain separate from business functionality.
 
 ---
 
-# Principle 6 — Modular Architecture
+# Principle 7 — Modular Architecture
 
 Orion is designed as a collection of cooperating modules built on a shared platform.
 
@@ -116,11 +108,13 @@ Modules should be:
 
 ---
 
-# Principle 7 — Simplicity
+# Principle 8 — Simplicity
 
 Prefer the simplest solution that satisfies both current and foreseeable business requirements.
 
 Complexity should only be introduced when it provides clear long-term value.
+
+Business classifications shall be configurable only when the business meaning can remain independent of application behaviour.
 
 ---
 
@@ -134,7 +128,7 @@ Extensibility is preferred over short-term optimization.
 
 ---
 
-# Principle 9 — Consistency
+# Principle 10 — Consistency
 
 Similar problems should be solved in similar ways.
 
@@ -144,7 +138,7 @@ Consistency reduces maintenance costs and improves usability.
 
 ---
 
-# Principle 10 — Data Integrity
+# Principle 11 — Data Integrity
 
 The database is the authoritative source of business information.
 
@@ -154,7 +148,7 @@ Validation should occur as early as practical while ensuring that the database r
 
 ---
 
-# Principle 11 — Processes Communicate Through Business Objects
+# Principle 12 — Processes Communicate Through Business Objects
 
 Business Processes shall exchange information exclusively through Business Objects.
 
@@ -164,7 +158,7 @@ This principle promotes loose coupling, traceability and extensibility across th
 
 ---
 
-# Principle 12 — Automation
+# Principle 13 — Automation
 
 Business processes should be automated wherever practical.
 
@@ -174,7 +168,7 @@ Manual intervention should be required only where business judgement is necessar
 
 ---
 
-# Principle 13 — Documentation as Part of the Product
+# Principle 14 — Documentation as Part of the Product
 
 Documentation is part of Orion.
 
@@ -184,7 +178,7 @@ Documentation should evolve together with the software.
 
 ---
 
-# Principle 14 — Build for Learning
+# Principle 15 — Build for Learning
 
 Orion is both a production platform and a learning project.
 
@@ -192,7 +186,7 @@ Technology choices should favor widely adopted, well-supported tools that help d
 
 ---
 
-# Principle 15 — Practical Engineering
+# Principle 16 — Practical Engineering
 
 Engineering decisions should balance correctness, maintainability, performance and development effort.
 
@@ -202,7 +196,7 @@ Performance improvements should be guided by measurement rather than assumption.
 
 ---
 
-# Principle 16 - Materializing Derived Representations
+# Principle 17 - Materializing Derived Representations
 
 Whenever a business representation is deterministic and frequently queried, Orion may persist it as a derived attribute rather than recomputing it on demand.
 

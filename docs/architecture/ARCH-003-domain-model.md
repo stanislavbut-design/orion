@@ -1,33 +1,27 @@
-# ARCH-03 — Domain Model
-
-
+# ARCH-03 — Business Domain Model
 
 | Property | Value |
 |----------|-------|
 | Document ID | ARCH-03 |
 | Title | Domain Model |
 | Status | Approved |
-| Version | 1.0 |
+| Version | 1.1 |
 | Owner | Orion Project |
-| Last Updated | 2026-07-17 |
+| Last Updated | 2026-07-22 |
 | Depends On | ARCH-00 |
 | Related ADRs | None |
 
 ---
 
-# Purpose
+# 1. Purpose and Scope
 
-The Orion Domain Model defines the business concepts that make up the Orion platform and the relationships between them.
+The **Orion Business Domain** Model defines the business concepts that make up the Orion platform and the relationships between them.
 
 It provides a technology-independent representation of the business and serves as the foundation for the application's architecture, database design, user interface and APIs.
 
-The Domain Model describes **what the business is**, not **how it is implemented**.
+The Business Domain Model describes **what the business is**, not **how it is implemented**.
 
-**ARCH-03** serves as the authoritative conceptual modeling guide for Orion. All new domain concepts shall conform to the taxonomy, conceptual questions and validation principles defined in this document before implementation begins.
-
----
-
-# Conceptual Model
+**Business Domain Model** serves as the authoritative conceptual modeling guide for Orion. All new domain concepts shall conform to the taxonomy, conceptual questions and validation principles defined in this document before implementation begins.
 
 Orion follows a concept-first design process.
 
@@ -36,7 +30,7 @@ Orion follows a concept-first design process.
 flowchart TD
     BL["Business Language"]
     GL["Glossary"]
-    DM["Domain Model"]
+    DM["Business Domain Model"]
     IM["Implementation"]
 
     BL --> GL
@@ -44,7 +38,7 @@ flowchart TD
     DM --> IM
 ```
 
-Business concepts are defined in the **Glossary**, organized in the **Domain Model**, and only then translated into software implementation.
+Business concepts are defined in the **Glossary**, organized in the **Business Domain Model**, and only then translated into software implementation.
 
 The conceptual domain model describes business concepts independently of implementation. A single implementation artifact (for example, a Django model) may represent one or more conceptual elements where doing so simplifies the implementation without compromising the conceptual integrity of the model.
 
@@ -52,69 +46,70 @@ The conceptual domain model represents business concepts independently of the le
 
 ---
 
-# Domain Taxonomy
+# 2. Business Architecture
 
-Orion models a business by distinguishing between identities, roles, business relationships, business processes and business objects.
+# 2.1. Overview
 
-Each category answers a different architectural question and has a distinct lifecycle.
+The Business Architecture defines the stable concepts used throughout Orion. Module-specific specifications extend this architecture but shall not contradict it.
 
-Understanding these distinctions is essential for building a consistent, extensible and maintainable domain model.
+Orion models a business through a layered architecture. Operational concepts describe how work is performed, structural concepts describe stable business identities and relationships, while Business Relationships connect both layers.
 
-## Conceptual Questions
+## 2.2. Architecture Layers
 
-Every concept in Orion should answer one primary conceptual question.
+The domain taxonomy make a distinction between categories that belong to the **Business Structure** and **Business Operation**:
 
-| Question | Category |
-|----------|----------|
-| What exists? | Identity |
-| In what capacity does it participate? | Role |
-| How are participants connected? | Business Relationship |
-| What repeatable business outcome is being achieved? | Business Process |
-| How is the activity managed or recorded? | Business Object |
-
-When introducing a new concept, its primary responsibility should be identified before implementation begins.
-
----
-
-## Business Structure and Business Activity
-
-The domain taxonomy make a distinction between categories that belong to the **Business Structure** and **Business Activity**:
-
-**Business Structure** says us how the business is organized:
-
-- Business Process
-- Identity
-- Role
-- Business Relationship
-
-**Business Activity** says us what happens in the business:
-
-- Business Objects
-
----
+```
+├── Operational Layer
+│     ├── Business Process
+│     └── Business Object
+│
+├── Bridge Layer
+│     └── Business Relationship
+│
+└── Structural Layer
+      ├── Relationship Type
+      ├── Role Type
+      └── Identity
+```
+## 2.3. Conceptual Diagram
 
 ```mermaid
 flowchart TD
 
-    BP["Business Process"]
+    subgraph Operational["Operational Layer"]
+        BP["Business Process"]
+        BO["Business Object"]
+    end
 
-    I["Identity"]
-    R["Role"]
-    BR["Business Relationship"]
+    subgraph Bridge["Bridge Layer"]
+        BR["Business Relationship"]
+    end
 
-    BO["Business Object"]
+    subgraph Structural["Structural Layer"]
+        RT["Relationship Type"]
 
-    I --> R
-    R --> BR
+        R1["Role Type"]
+        R2["Role Type"]
 
-    BP -.provides business context.-> BR
-    BP -.provides business context.-> BO
+        I1["Identity"]
+        I2["Identity"]
+    end
 
-    BR -.may be formalized by.-> BO
-    BO -.may establish.-> BR
+    BP --> BO
+    BO -->|creates / modifies| BR
+    BR -->|is an instance of| RT
+
+    RT -->|defines permitted| R1
+    RT -->|defines permitted| R2
+
+    R1 -->|performed by| I1
+    R2 -->|performed by| I2
 ```
+---
 
-## Identity
+# 3. Core Concepts
+
+## 3.1. Identity
 
 The Identity model defines the fundamental business identities recognised by Orion and the relationships between them.
 
@@ -142,17 +137,18 @@ Identity
 ```
 ---
 
-## Role
+## 3.2. Role Type
 
-A **Role** describes how an Identity participates in the business.
+A predefined Orion classification describing the function performed by an Identity within a particular Relationship Type.
 
 A Role defines the business capabilities available to an Identity and contains only business data specific to that participation.
 
 Roles do not exist independently from the Identity that performs them.
 
+Roles have no independent existence outside a Business Relationship.
+
 A single Identity may perform multiple different roles simultaneously. Each Identity may perform each role at most once.
 
-Business-specific variations of a role (such as different contracts, pricing agreements, payment terms or service arrangements) shall be represented by separate Business Objects rather than by creating additional instances of the same role.
 
 **Examples:**
 
@@ -165,13 +161,19 @@ Business-specific variations of a role (such as different contracts, pricing agr
 
 ---
 
-## Business Relationship
+## 3.3. Relationship Type
 
-A **Business Relationship** is a business fact that connects two or more Identities or Roles.
+A predefined Orion classification defining the permitted participant Identity types and the Roles they may perform.
+
+---
+
+## 3.4. Business Relationship
+
+A business fact connecting Identities according to a predefined Relationship Type.
+
+Each participant performs exactly one Role within that relationship.
 
 Relationships describe how participants are associated within the business independently of the documents or transactions that may formalize or result from those associations. Relationships have their own lifecycle and business rules but exist only because the connected concepts exist.
-
-Some relationships exist without dedicated business objects, while others are established or governed through business objects.
 
 **Examples:**
 
@@ -182,11 +184,9 @@ Some relationships exist without dedicated business objects, while others are es
 
 ---
 
-## Business Process
+## 3.5. Business Process
 
-A **Business Process** is a repeatable sequence of business activities performed to achieve a defined outcome.
-
-Business Processes organize work; they do not own business entities.
+An organization-defined operational classification describing the business activity within which Business Objects are used. Business Processes provide operational context and reporting dimensions but do not determine business semantics.
 
 **Examples:**
 
@@ -195,17 +195,19 @@ Business Processes organize work; they do not own business entities.
 - Procurement
 - Payroll
 
-## Business Object
+---
+
+## 3.6. Business Object
+
+A predefined Orion concept representing a business document or transaction that creates or modifies Business Relationships.
 
 A **Business Object** represents information that the Organization creates, manages or records as part of its business activities.
-
-Business Objects may establish, govern, execute or record business activities and often formalize Business Relationships.
 
 Unlike Identities and Roles, Business Objects are transactional in nature and normally have a defined lifecycle consisting of creation, modification and completion.
 
 Every Business Object have:
 
-- one primary Business Process, and
+- zero or one primary Business Process, and
 - zero or one primary Business Relationship.
 
 **Examples:**
@@ -218,173 +220,43 @@ Every Business Object have:
 - Journal Entry
 - Time Entry
 
-### Business Relationship and Business Object
-
-Business Relationships and Business Objects represent different aspects of the business model.
-
-A Business Relationship describes a business fact.
-
-A Business Object represents the information through which that fact is established, managed or recorded.
-
-A Business Relationship may exist independently of any Business Object.
-
-For example, a prospective customer may have an established customer relationship before any quotation, agreement or invoice exists.
-
-Conversely, some Business Objects establish or formalize Business Relationships.
-
-For example:
-
-- Employment Agreement establishes an employment relationship.
-- Customer Agreement establishes a commercial relationship.
-- Supplier Agreement establishes a procurement relationship.
-
-Other Business Objects operate within existing relationships.
-
-For example:
-
-- Invoice
-- Payment
-- Assignment
-
-Finally, some Business Objects merely record business events.
-
-For example:
-
-- Journal Entry
-- Time Entry
-
-### Categories of Business Objects
-
-**Constitutive Business Objects** establish, modify or terminate Business Relationships. They record business events within establishing Business Relationships.
-
-Examples:
-
-- Employment Agreement
-- Customer Agreement
-- Supplier Agreement
-
-**Operational Business Objects** record business events within, or without, establishing Business Relationships, but they do not establish, modify or terminate Business Relationships.
-
-Examples:
-
-- Invoice
-- Payment
-- Purchase Order
-- Assignment
-- Journal Entry
-- Time Entry
-
-
 ---
 
-# Business Process Architecture
 
-Business Processes describe the behavioural structure of the Organization.
+## Examples
 
-Where Identities, Roles and Business Relationships describe the static structure of the business, Business Processes describe how the business operates.
+**Employment**
+```
+Business Process
+    Human Resources
 
-Business Processes provide the context in which Business Relationships are established and Business Objects are managed.
+Bosiness Object
+    Employment Agreement
 
-Business Processes communicate exclusively through Business Objects.
+Business Relationship
+    Employment
 
-Outputs produced by one Business Process may become inputs to other Business Processes.
+Participants:
 
-## Business Process Hierarchy
+ABC Ltd
+    Role Type: Employer
+    Identity: Party
 
-Business Processes may be organised hierarchically.
+John Smith
+    Role Type: Employee
+    Identity: Person
+```
 
-A Business Process may be decomposed into one or more Business Sub-processes.
 
-Decomposition continues until the lowest-level Business Processes are reached.
+# 4. Identity Architecture
 
-Lowest-level Business Processes consist of Business Activities, which represent indivisible units of work within the process.
+## 4.1. Overview
+
+The Identity Architecture defines the stable business participants recognised by Orion and the relationships between them. These identities form the foundation upon which Business Relationships, Roles and Business Objects operate.
 
 ```mermaid
 flowchart TD
 
-    BP1["Business Process"]
-
-    BP1 --> BP2["Business Sub-process"]
-
-    BP1 --> BP3["Business Sub-process"]
-
-    BP2 --> A1["Business Activity"]
-    BP2 --> A2["Business Activity"]
-
-    BP3 --> A3["Business Activity"]
-```
-## Process Interfaces
-
-Every Business Process produces one or more outputs.
-
-Outputs are represented by Business Objects created or modified by the process.
-
-These outputs may become inputs to other Business Processes.
-
-Business Processes communicate through Business Objects rather than by direct dependency.
-
-```mermaid
-flowchart LR
-
-    P1["Client Acquisition"]
-
-    Agreement["Customer Agreement"]
-
-    P2["Service Delivery"]
-
-    Invoice["Invoice"]
-
-    P3["Accounts Receivable"]
-
-    Payment["Payment"]
-
-    P1 --> Agreement
-    Agreement --> P2
-
-    P2 --> Invoice
-    Invoice --> P3
-
-    P3 --> Payment
-```
-
-
-# Validation Matrix
-
-A **Business Object** should be able to answer the following questions:
-
-1. Which ***Business Process*** does it belong to? What business outcome does it help achieve? (inherited from the Business Process)
-2. Which ***Business Relationship*** does it support or formalize (if any)?
-3. Which ***Roles*** participate?
-4. Which ***Identities*** perform those Roles?
-5. Which ***Business Process*** it is produced by?
-6. Which ***Business Process***, or an external process, it is consumed by?
-
-
-| Business Object      | Business Process | Business Relationship | Roles    | Identities | Produced By | Consumed By |
-| -------------------- | ---------------- | --------------------- | -------- | ---------- | ----------- | ----------- |
-| *(To be identified)* | Required         | Optional              | Required | Required   | Required    | Required    |
-
-Every new Business Object should be validated against this matrix before implementation. 
-
-**Validation rules**:
-
-- Every Business Object shall belong to one primary Business Process.
-- A Business Object may establish, govern, operate within or record a Business Relationship.
-- Every participating Role shall be performed by an Identity.
-- Every Business Object shall belong to exactly one primary Business Process. Business Processes define the business context.
-- A Business Object may establish, govern, operate within or record a Business Relationship.
-- Business Objects manage or record the business activity.
-
-Business Objects shall not duplicate information that belongs to Identities, Roles, Business Relationships or Business Processes. They shall reference those concepts and record only information specific to the business activity they manage.
-
----
-
-# Identity Model
-
-```mermaid
-flowchart TD
-
-    Organization --> BusinessProcess
     Organization --> Party
     Organization --> Person
 
@@ -397,21 +269,15 @@ flowchart TD
     Person --> Employee["Employee <br/>(Role)"]
     Person --> Contact["Contact <br/>(Role)"]
 ```
-## Design Evolution
 
-During the design of Orion, Company was initially modeled as a core business identity.
 
-Following further analysis, it became clear that Company represents a business role performed by a Party rather than an independent identity. This change simplified the domain model and established the principle that stable identities are modeled independently from the roles they perform.
-
-This principle now underpins the entire Orion domain model.
-
----
-
-## Organization
+## 4.2. Organization
 
 ### Purpose
 
-The Organization establishes the highest boundary for ownership, security, configuration and management reporting. All business concepts managed by Orion belong to exactly one Organization.
+Organization is the root business concept within Orion.
+
+The Organization establishes the highest boundary for ownership, security, configuration and management reporting. All business concepts managed by Orion belong to exactly one Organization, and shall not be shared across Organizations.
 
 ### Definition
 
@@ -421,25 +287,15 @@ It defines the scope within which all business identities, business processes an
 
 An Organization is not necessarily a legal entity.
 
-Characteristics:
+### Characteristics:
 - Exactly one Organization exists within an Orion installation.
 - An Organization owns Parties and Persons.
 - The Organization exists for the lifetime of the installation.
 - The Organization name may be changed, but the Organization itself cannot be replaced or deleted.
 
-### Implementation Notes
-
-Organization is the root business concept within Orion.
-
-It defines ownership, security, configuration and reporting boundaries.
-
-Business concepts owned by an Organization shall not be shared across Organizations.
-
-Organization should remain stable throughout the lifetime of the business.
-
 ---
 
-## Party
+## 4.3. Party
 
 ### Purpose
 
@@ -453,18 +309,15 @@ A Party exists independently of the roles it performs and provides a stable iden
 
 The Party concept allows Orion to represent business participants without duplicating identity information when a participant performs multiple business roles.
 
+### Design Evolution
 
-### Implementation Notes
+During the design of Orion, Company was initially modeled as a core business identity.
 
-Party represents business identity rather than business behavior.
-
-Role-specific data should belong to the corresponding business role rather than to the Party itself.
-
-The Party concept shall remain independent of individual business modules to ensure extensibility.
+Following further analysis, it became clear that Company represents a business role performed by a Party rather than an independent identity. This change simplified the domain model and established the principle that stable identities are modeled independently from the roles they perform.
 
 ---
 
-## Person
+## 4.4.Person
 
 ### Purpose
 
@@ -490,7 +343,7 @@ A Person may exist even when not currently associated with any Party.
 
 ---
 
-## Identity Relationships
+## 4.5. Identity Relationships
 
 ### Purpose
 
@@ -546,19 +399,196 @@ Business Relationships describe commercial or organisational relationships betwe
 The two concepts are independent and shall not be confused.
 
 
+## 5. Relationship Matrix
+
+This matrix shows how identities and their roles are related in the business context. This is illustrative and not to be considered conclusive.
 
 
-## Concept Modeling Procedure
+<table>
+  <thead>
+    <tr>
+        <th colspan="1">Identities</th>
+        <th colspan="1"></th>
+        <th colspan="1">Party</th>
+        <th colspan="4">Person</th>            
+    </tr>
+        <th></th>
+        <th>Role Types</th>
+        <th>Company</th>
+        <th>Employee</th>
+        <th>Director</th>
+        <th>Contact</th>
+        <th>User</th>
+    <tr>
+        <th>Party</th>
+        <th>Customer</th>
+        <th>Sales Contract</th>
+        <th>Responsible Person</th>
+        <th>N/A</th>
+        <th>Representative</th>
+        <th>N/A</th>                          
+    </tr>
+    <tr>
+        <th></th>
+        <th>Supplier</th>
+        <th>Supply Agreement</th>
+        <th>Responsible Person</th>
+        <th>N/A</th>
+        <th>Representative</th>                        
+        <th>N/A</th>    
+    </tr>
+    <tr>
+        <th></th>
+        <th>Partner</th>
+        <th>Shareholder Relationship</th>
+        <th>Responsible Person</th>
+        <th>N/A</th>
+        <th>Representative</th>                        
+        <th>N/A</th>    
+    </tr>
+    <tr>
+        <th></th>
+        <th>Partner</th>
+        <th>Loan Agreement</th>
+        <th>Responsible Person</th>
+        <th>N/A</th>
+        <th>Representative</th>                        
+        <th>N/A</th>    
+    </tr>
+    <tr>
+        <th></th>
+        <th>Company</th>
+        <th>N/A</th>
+        <th>Employment Agreement</th>
+        <th>Corporate Governance Arrangement</th>
+        <th>N/A</th>                        
+        <th>Access Privileges</th>    
+    </tr>
+    <tr>
+        <th>Organization</th>
+        <th>Owner</th>
+        <th>Ownership</th>
+        <th>Ownership</th>
+        <th>--</th>
+        <th>--</th>                        
+        <th>Access Privileges</th>    
+    </tr>
+  </thead>
+  <tbody>
 
-Every new domain concept should be introduced using the following procedure:
+  </tbody>
+</table>
 
-1. Identify the business problem the concept solves.
-2. Determine the primary conceptual question it answers.
-3. Classify the concept using the domain taxonomy.
-4. Define its responsibilities and lifecycle.
-5. Identify its dependencies on existing concepts.
-6. Verify that it does not duplicate existing responsibilities.
-7. Validate the concept against the Business Object Validation matrix where applicable.
-8. Only then proceed to implementation.
+---
+
+# 6. Architectural Principles
+
+## 6.1 Business Process Principles
+
+### ARCH-003-P001
+
+Business Processes define operational context.
+
+### ARCH-003-P002
+
+Every Business Process produces one or more outputs.
+
+Outputs of Business Processes are represented by Business Objects created or modified by the process.
+
+### ARCH-003-P003
+
+Business Processes communicate exclusively through Business Objects.
+
+Outputs produced by one Business Process may become inputs to other Business Processes.
+
+### ARCH-003-P004
+
+Business Processes may be organized hierarchically.
+
+A Business Process may be decomposed into one or more Business Sub-processes.
+
+Decomposition continues until the lowest-level Business Processes are reached.
+
+Lowest-level Business Processes consist of Business Activities, representing indivisible units of work.
+
+Business Activities are recorded by Business Objects.
+
+### ARCH-003-P005
+
+Business Processes are defined by the Organization.
+
+Orion imposes no predefined catalogue of Business Processes.
+
+## 6.2 Business Object Principles
+
+### ARCH-003-P101
+
+Business Objects define business semantics.
+
+### ARCH-003-P102
+
+Business Objects are predefined by Orion.
+
+Organizations may configure their usage but shall not define new Business Object types.
+
+### ARCH-003-P103
+
+Each Root Business Object invariantly defines the Relationship Type within which it operates.
+
+### ARCH-003-P104
+
+A Business Process is an optional attribute of a Root Business Object.
+
+If assigned, it provides the operational context for the Business Object hierarchy.
+
+### ARCH-003-P105
+
+Only Root Business Objects may be assigned a Business Process directly.
+
+Child Business Objects inherit the Business Process from their parent.
+
+### ARCH-003-P106
+
+The classification of Business Objects according to their effect on Business Relationships is intentionally deferred until sufficient business scenarios have been modelled.
+
+## 6.3 Relationship Principles
+
+### ARCH-003-P201
+
+Relationship Types are predefined by Orion.
+
+### ARCH-003-P202
+
+Role Types are predefined by Orion.
+
+### ARCH-003-P203
+
+Relationship Types define the permitted Roles.
+
+### ARCH-003-P204
+
+Role Types define the Identity types permitted to perform them.
+
+### ARCH-003-P205
+
+Business Relationships are instances of Relationship Types.
+
+## 6.4 Identity Principles
+
+### ARCH-003-P301
+
+Identities represent stable business participants independent of their relationships.
+
+### ARCH-003-P302
+
+Business Relationships connect Identities without altering their identity.
+
+### ARCH-003-P303
+
+Roles describe functions performed by Identities within Business Relationships.
+
+---
+
+# 7. Related Documents
 
 
