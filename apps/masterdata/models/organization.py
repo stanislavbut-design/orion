@@ -6,6 +6,7 @@ from django.db import models
 from apps.core.constants.validation import (
     ORG_SINGLETON_ERROR,
     ORG_DELETE_ERROR,
+    ORG_NAME_REQUIRED,
 )
 
 class Organization(models.Model):
@@ -38,8 +39,15 @@ class Organization(models.Model):
     def clean(self):
         super().clean()
 
+        self.name = self.name.strip() if self.name else None
+
         if not self.pk and Organization.objects.exists():
             raise ValidationError(self.ORG_SINGLETON_ERROR)
+        
+        if not self.name:
+            raise ValidationError({
+                "name": self.ORG_NAME_REQUIRED
+            })
 
     def save(self, *args, **kwargs):
         self.full_clean()

@@ -8,6 +8,7 @@ localized translations.
 # Organization
 ORG_SINGLETON_ERROR = "Exactly one Organization may exist in an Orion installation."
 ORG_DELETE_ERROR = "The Organization cannot be deleted."
+ORG_NAME_REQUIRED = "Organization Name is required."
 
 # Person
 PER_FIRST_NAME_REQUIRED = "First Name is required."
