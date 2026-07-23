@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Organization, Party, Person, BusinessRelationship
+from .models import Organization, Party, Person, BusinessRelationship, BusinessRelationshipParticipant
 
 
 @admin.register(Organization)
@@ -126,4 +126,26 @@ class BusinessRelationshipAdmin(admin.ModelAdmin):
     ordering = (
         "relationship_type",
         "effective_from",
+    )
+
+@admin.register(BusinessRelationshipParticipant)
+class BusinessRelationshipParticipantAdmin(admin.ModelAdmin):
+    list_display = (
+        "business_relationship",
+        "role_type",
+        "organization",
+        "party",
+        "person",
+    )
+
+    list_filter = (
+        "role_type",
+    )
+
+    readonly_fields = (
+        "public_id",
+    )
+
+    search_fields = (
+        "role_type",
     )
