@@ -7,7 +7,7 @@
 | Status | Approved |
 | Version | 1.1 |
 | Owner | Orion Project |
-| Last Updated | 2026-07-22 |
+| Last Updated | 2026-07-23 |
 | Depends On | ARCH-00 |
 | Related ADRs | None |
 
@@ -173,7 +173,8 @@ A business fact connecting Identities according to a predefined Relationship Typ
 
 Each participant performs exactly one Role within that relationship.
 
-Relationships describe how participants are associated within the business independently of the documents or transactions that may formalize or result from those associations. Relationships have their own lifecycle and business rules but exist only because the connected concepts exist.
+Relationships define the participants in business activity independently of the documents or transactions that may formalize or result from those associations. Relationships have their own lifecycle and business rules but exist only because the connected concepts exist.
+
 
 **Examples:**
 
@@ -199,9 +200,9 @@ An organization-defined operational classification describing the business activ
 
 ## 3.6. Business Object
 
-A predefined Orion concept representing a business document or transaction that creates or modifies Business Relationships.
+A predefined Orion concept representing a business event (a document or transaction that creates or modifies Business Relationships). 
 
-A **Business Object** represents information that the Organization creates, manages or records as part of its business activities.
+A **Business Object** records information that the Organization creates or manages as part of its business activities.
 
 Unlike Identities and Roles, Business Objects are transactional in nature and normally have a defined lifecycle consisting of creation, modification and completion.
 
@@ -210,10 +211,13 @@ Every Business Object have:
 - zero or one primary Business Process, and
 - zero or one primary Business Relationship.
 
+Business Objects may reference domain entities that are the subject matter of the recorded event.
+
 **Examples:**
 
 - Employment Agreement
-- Customer Agreement
+- Sales Agreement
+- Supply Agreement
 - Assignment
 - Invoice
 - Payment
@@ -223,7 +227,7 @@ Every Business Object have:
 ---
 
 
-## Examples
+## Conceptual Example
 
 **Employment**
 ```

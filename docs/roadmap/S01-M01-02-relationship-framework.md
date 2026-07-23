@@ -18,32 +18,22 @@
 S01-M01.02.01 Refine ARCH-003 architectural baseline
 
 
-## Step 2 — Create Business Relationship Framework
+## Step 2 — Define Business Relationship Framework
+
+`business-relationship-framework.md`
+
+### Commit 2:
+
+S01-M01.02.02 Define Business Relationship Framework
+
+## Step 3 — Relationship and Role constants
+
+S01-M01.02.03 Define Relationship and Role constants
 
 
 
 
-## Step 3 — Define predefined catalogues
 
-These are not Django models yet.
-
-Instead, we define the canonical enumerations that Orion supplies.
-
-### Relationship Types
-
-### Role Types
-
-
-
-## Step 4 — Django implementation
-
-### 1. RelationshipType
-
-### 2. RoleType
-
-### 3. BusinessRelationship
-
-### 4. Relationship Participants
 
 
 ## Step 5 — Define Party–Role relationships
