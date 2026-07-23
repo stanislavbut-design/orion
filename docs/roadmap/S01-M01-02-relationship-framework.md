@@ -15,53 +15,36 @@
 
 ### Commit 1:
 
-S01-M01.02.01 Refine ARCH-003
+S01-M01.02.01 Refine ARCH-003 architectural baseline
 
 
-## Step 2 — Create the Role specification
-
-Create: `docs/modules/masterdata/entities/role.md` using the standard specification layout.
-
-Topics should include:
-
-- Purpose
-- Definition
-- Conceptual diagrams
-- Responsibilities
-- Identity
-- Lifecycle
-- Relationships
-- Business Rules
-- Planned Attributes
-- Notes
-- Related Documents
+## Step 2 — Create Business Relationship Framework
 
 
-## Step 3 — Design the Role data model
 
-Define the Django entities.
 
-At this stage, I anticipate something along the lines of:
-```
-Role
-```
-with attributes such as:
+## Step 3 — Define predefined catalogues
 
-- Organization
-- Public ID
-- Name
-- Description (optional)
+These are not Django models yet.
 
-We'll decide whether a separate RoleType entity is needed now or later.
+Instead, we define the canonical enumerations that Orion supplies.
 
-## Step 4 — Implement the Role model
+### Relationship Types
 
-Tasks:
+### Role Types
 
-- Create `role.py`
-- Register in Django Admin
-- Create migrations
-- Test CRUD operations
+
+
+## Step 4 — Django implementation
+
+### 1. RelationshipType
+
+### 2. RoleType
+
+### 3. BusinessRelationship
+
+### 4. Relationship Participants
+
 
 ## Step 5 — Define Party–Role relationships
 
