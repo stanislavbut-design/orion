@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Organization, Party, Person
+from .models import Organization, Party, Person, BusinessRelationship
 
 
 @admin.register(Organization)
@@ -101,3 +101,29 @@ class PersonAdmin(admin.ModelAdmin):
             obj.organization = Organization.objects.get()
 
         super().save_model(request, obj, form, change)
+
+@admin.register(BusinessRelationship)
+class BusinessRelationshipAdmin(admin.ModelAdmin):
+    list_display = (
+        "relationship_type",
+        "organization",
+        "effective_from",
+        "effective_to",
+    )
+
+    list_filter = (
+        "relationship_type",
+    )
+
+    readonly_fields = (
+        "public_id",
+    )
+
+    search_fields = (
+        "relationship_type",
+    )
+
+    ordering = (
+        "relationship_type",
+        "effective_from",
+    )
