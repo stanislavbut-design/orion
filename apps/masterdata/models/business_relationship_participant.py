@@ -122,6 +122,12 @@ class BusinessRelationshipParticipant(models.Model):
                 BRP_EXACTLY_ONE_IDENTITY
             )
 
+        #    raise ValidationError(
+        #        f"Org={self.organization_id}, "
+        #        f"Party={self.party_id}, "
+        #        f"Person={self.person_id}, "
+        #        f"Count={identity_count}"
+        #    )
         #
         # Effective dates
         #
@@ -173,12 +179,6 @@ class BusinessRelationshipParticipant(models.Model):
             raise ValidationError(
                 BRP_ROLE_RELATIONSHIP_MISMATCH
             )
-
-    def save(self, *args, **kwargs):
-
-        self.full_clean()
-
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return (

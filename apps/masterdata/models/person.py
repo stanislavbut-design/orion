@@ -36,12 +36,6 @@ class Person(models.Model):
         editable=False,
     )
 
-    organization = models.ForeignKey(
-        Organization,
-        on_delete=models.PROTECT,
-        related_name="persons",
-    )
-
     first_name = models.CharField(
         max_length=40,
     )

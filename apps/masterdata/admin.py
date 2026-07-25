@@ -1,7 +1,12 @@
 from django.contrib import admin
 
-from .models import Organization, Party, Person, BusinessRelationship, BusinessRelationshipParticipant
-
+from .models import (
+    Organization, 
+    Party, 
+    Person, 
+    BusinessRelationship, 
+    BusinessRelationshipParticipant
+)
 
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
@@ -50,21 +55,11 @@ class PartyAdmin(admin.ModelAdmin):
 
     readonly_fields = (
         "public_id",
-    )
-
-    exclude = (
-        "organization",
     )   
 
     ordering = (
         "name",
     )
-
-    def save_model(self, request, obj, form, change):
-        if obj.organization_id is None:
-            obj.organization = Organization.objects.get()
-
-        super().save_model(request, obj, form, change)
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
@@ -84,11 +79,7 @@ class PersonAdmin(admin.ModelAdmin):
         "full_name",
         "short_name",
         "public_id",
-    )
-
-    exclude = (
-        "organization",
-    )   
+    ) 
 
     ordering = (
         "last_name",
@@ -96,17 +87,10 @@ class PersonAdmin(admin.ModelAdmin):
         "middle_name",
     )
 
-    def save_model(self, request, obj, form, change):
-        if obj.organization_id is None:
-            obj.organization = Organization.objects.get()
-
-        super().save_model(request, obj, form, change)
-
 @admin.register(BusinessRelationship)
 class BusinessRelationshipAdmin(admin.ModelAdmin):
     list_display = (
         "relationship_type",
-        "organization",
         "effective_from",
         "effective_to",
     )
@@ -128,12 +112,12 @@ class BusinessRelationshipAdmin(admin.ModelAdmin):
         "effective_from",
     )
 
+
 @admin.register(BusinessRelationshipParticipant)
 class BusinessRelationshipParticipantAdmin(admin.ModelAdmin):
     list_display = (
         "business_relationship",
         "role_type",
-        "organization",
         "party",
         "person",
     )

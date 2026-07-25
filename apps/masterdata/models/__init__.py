@@ -8,4 +8,6 @@ __all__ = [
     "Organization",
     "Party",
     "Person",
+    "BusinessRelationship",
+    "BusinessRelationshipParticipant",
 ]

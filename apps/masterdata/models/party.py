@@ -24,12 +24,6 @@ class Party(models.Model):
         editable=False,
     )
 
-    organization = models.ForeignKey(
-        Organization,
-        on_delete=models.PROTECT,
-        related_name="parties",
-    )
-
     name = models.CharField(
         max_length=60,
         unique=True,
@@ -63,7 +57,7 @@ class Party(models.Model):
 
         constraints = [
             models.UniqueConstraint(
-                fields=["organization", "party_code"],
+                fields=["party_code"],
                 name="uq_party_party_code",
             ),
             

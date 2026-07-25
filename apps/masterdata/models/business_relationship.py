@@ -29,12 +29,6 @@ class BusinessRelationship(models.Model):
         editable=False,
     )
 
-    organization = models.ForeignKey(
-        Organization,
-        on_delete=models.PROTECT,
-        related_name="business_relationships",
-    )
-
     relationship_type = models.CharField(
         max_length=32,
         choices=RelationshipType.choices,
@@ -74,16 +68,5 @@ class BusinessRelationship(models.Model):
             and self.effective_to
             and self.effective_to < self.effective_from
         ):
-            raise ValidationError(
-                {
-                    BRL_INVALID_DATE_RANGE
-                }
-            )
+            raise ValidationError(BRL_INVALID_DATE_RANGE)
 
-    def save(self, *args, **kwargs):
-        if self.organization_id is None:
-            self.organization = Organization.objects.get()
-
-        self.full_clean()
-
-        super().save(*args, **kwargs)
