@@ -39,17 +39,20 @@ class PartyAdmin(admin.ModelAdmin):
         "name",
         "legal_name",
         "party_type",
+        "person",
         "party_code",
         "business_id",
     )
 
     list_filter = (
         "party_type",
+        "person",
     )
 
     search_fields = (
         "name",
         "legal_name",
+        "person__full_name",
         "business_id",
     )
 

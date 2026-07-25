@@ -3,7 +3,13 @@ import uuid
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
-from .organization import Organization
+from .person import Person
+
+from apps.core.constants.validation.masterdata import(
+    PTY_INDIVIDUAL_PERSON_REQUIRED,
+    PTY_PERSON_NOT_ALLOWED,
+    PTY_PERSON_ALREADY_ASSOCIATED,
+)
 
 class PartyTypes(models.TextChoices):
     LEGAL_ENTITY = "LEGAL_ENTITY", "Legal Entity"
@@ -40,6 +46,14 @@ class Party(models.Model):
         default=PartyTypes.LEGAL_ENTITY,
     )
 
+    person = models.ForeignKey(
+        Person,
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name="party",
+    )
+
     business_id = models.CharField(
         max_length=20,
         blank=False,
@@ -72,3 +86,28 @@ class Party(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    def clean(self):
+        """
+        Validate business rules.
+        """
+        super().clean()
+
+        if self.party_type == PartyTypes.INDIVIDUAL and self.person is None:
+            raise ValidationError({
+                "person": PTY_INDIVIDUAL_PERSON_REQUIRED
+            })
+
+        if self.party_type != PartyTypes.INDIVIDUAL and self.person is not None:
+            raise ValidationError({
+                "person": PTY_PERSON_NOT_ALLOWED
+            })
+
+        if self.person is not None:        
+            if Party.objects.filter(
+                person=self.person,
+                party_type=PartyTypes.INDIVIDUAL,
+            ).exclude(pk=self.pk).exists():
+                raise ValidationError({
+                    "person": PTY_PERSON_ALREADY_ASSOCIATED
+                })

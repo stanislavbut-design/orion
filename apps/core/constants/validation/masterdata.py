@@ -26,3 +26,7 @@ BRP_EXACTLY_ONE_IDENTITY = "Exactly one of Organization, Party or Person shall b
 BRP_INVALID_DATE_RANGE = "Effective To cannot be earlier than Effective From."
 BRP_ROLE_IDENTITY_MISMATCH = "The selected Role Type is not valid for the specified Identity."
 BRP_ROLE_RELATIONSHIP_MISMATCH = "The selected Role Type is not permitted for this Relationship Type."
+
+PTY_INDIVIDUAL_PERSON_REQUIRED = "An Individual Party must be associated with a Person."
+PTY_PERSON_NOT_ALLOWED = "Only Individual Parties may be associated with a Person."
+PTY_PERSON_ALREADY_ASSOCIATED = "The selected Person is already associated with another Individual Party."

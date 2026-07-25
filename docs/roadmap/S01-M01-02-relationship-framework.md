@@ -262,3 +262,59 @@ S01-M01.02.07 Architecture Refactoring
 ### Commit 8
 
 S01-M01.02.08 Documentation Update
+
+
+## Step 11 — Complete Identity Integrity Validation
+
+### Task 11.1 Individual Party requires Person
+
+If party_type == INDIVIDUAL then person != None
+
+### Task 11.2 Non-individual Party must not reference Person
+
+If party_type != INDIVIDUAL then person == None
+
+This prevents accidental assignment of a Person to a Company, Government Agency, Charity, etc.
+
+### Task 11.3 One-to-one mapping
+
+A Person may belong to exactly one Individual Party.
+
+Implementation is straightforward:
+```
+Party.objects.filter(
+    person=self.person,
+    party_type=PartyType.INDIVIDUAL,
+).exclude(pk=self.pk).exists()
+```
+If one exists, raise the corresponding validation error.
+
+### Task 11.4 Validation messages
+
+Following the new constants policy, the messages belong in
+
+apps/core/constants/validation/masterdata.py
+
+Something like:
+```
+PTY_INDIVIDUAL_PERSON_REQUIRED = (
+    "An Individual Party must be associated with a Person."
+)
+
+PTY_PERSON_NOT_ALLOWED = (
+    "Only Individual Parties may be associated with a Person."
+)
+
+PTY_PERSON_ALREADY_ASSOCIATED = (
+    "The selected Person is already associated with another Individual Party."
+)
+```
+
+### Task 11.5 Tests
+
+Three tests should be sufficient:
+
+✅ Create Individual Party without Person → fails.
+✅ Create Company with Person assigned → fails.
+✅ Associate the same Person with two Individual Parties → fails.
+
