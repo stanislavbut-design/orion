@@ -14,8 +14,9 @@ Lists Orion's Architecture Decision Records.
 | ADR-004 | Custom Django User Model | Approved ||| ADR-004-users.md
 | ADR-005 | Internationalization | Approved ||| ADR-005-i18n.md
 | ADR-006 | Stable Business Codes | Approved ||| ADR-006-codes.md
-| ADR-007 | Entity Identification | Planned ||| ADR-007-identity.md
-| ADR-008 | Master Data Organization | Planned ||| ADR-008-masterdata.md
+| ADR-007 | Entity Identification | Approved ||| ADR-007-identity.md
+| ADR-008 | Master Data Organization | Approved ||| ADR-008-masterdata.md
+| ADR-009 | Single-Tenant Deployment Model | Approved ||| ADR-009-deployment-model.md
 
 ## Related Sections
 

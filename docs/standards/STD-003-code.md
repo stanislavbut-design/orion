@@ -8,6 +8,7 @@ Source code artifacts shall be organized according to ownership and responsibili
 
 
 
+
 `__init__.py` shall normally remain empty.
 
 Objects should be imported from the module that defines them. Re-exporting through `__init__.py` should be used only when a package intentionally exposes a simplified public API.

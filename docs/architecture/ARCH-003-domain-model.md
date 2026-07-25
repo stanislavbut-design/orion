@@ -54,7 +54,12 @@ The Business Architecture defines the stable concepts used throughout Orion. Mod
 
 Orion models a business through a layered architecture. Operational concepts describe how work is performed, structural concepts describe stable business identities and relationships, while Business Relationships connect both layers.
 
-## 2.2. Architecture Layers
+# 2.2 Implicit Ownership
+
+An Orion installation represents a single tenant. Ownership of business records is therefore implicit and is not represented in the domain model.
+
+
+## 2.3. Architecture Layers
 
 The domain taxonomy make a distinction between categories that belong to the **Business Structure** and **Business Operation**:
 
@@ -71,7 +76,7 @@ The domain taxonomy make a distinction between categories that belong to the **B
       ├── Role Type
       └── Identity
 ```
-## 2.3. Conceptual Diagram
+## 2.4. Conceptual Diagram
 
 ```mermaid
 flowchart TD

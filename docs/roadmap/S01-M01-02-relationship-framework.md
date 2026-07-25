@@ -45,7 +45,7 @@ S01-M01.02.04 Implement BusinessRelationship model
 
 S01-M01.02.05 Implement BusinessRelationshipParticipant model
 
-## Step 6. Validation
+## Step 6. Validation ✅ COMPLETED
 
 ### Task 1. Create validation messages
 `apps/core/constants/validation/masterdata.py`
@@ -64,7 +64,201 @@ In `business_relationship_participant.py`
 
 S01-M01.02.06 Implement Relationship Framework validation
 
-## Step 7. Testing
+## Step 7. Testing ✅ COMPLETED
 
+### Test 1 
 
+Create a valid **Employment** relationship
 
+Pass
+
+### Test 2
+
+Create a **BusinessRelationshipParticipant** with both a ***Party*** and a ***Person*** populated.
+
+Expected result:
+
+`Exactly one of Organization, Party or Person shall be specified.`
+
+Pass
+
+### Test 3 — No identity specified
+
+Create a new **BusinessRelationshipParticipant** and leave all three identity fields empty:
+
+Organization: (hidden by Admin)
+Party: empty
+Person: empty
+
+Choose a valid:
+
+Business Relationship
+Role Type (for example, Employee)
+
+Save.
+
+Expected result
+
+`Validation error: Exactly one of Organization, Party or Person shall be specified.`
+
+Pass
+
+### Test 4 — Role ↔ Identity validation
+
+Now let's verify that a Role Type is compatible with the selected Identity Type.
+
+**Scenario**
+
+Use an existing Employment relationship.
+
+Create a participant with:
+
+Role Type: Director
+Party: select any Company (Party)
+Person: empty
+
+Save.
+
+Expected result
+
+Validation error:
+
+`The selected Role Type is not valid for the specified Identity.`
+
+Tests 3 and 4 passed. But there's another issue: When I add new BusinessRelationshipParticipant with valid set of attributes, e.g.: Business Relationship = EMPLOYMENT Role Type = Employee Person specified It saves correctly. But when I open it for editing, no changes is made, it fails with a validation error "Exactly one of Organization, Party or Person shall be specified." The same for other types of relationship.
+
+### Test 5 — Relationship ↔ Role validation
+
+Create a participant with:
+
+Relationship Type: EMPLOYMENT
+Role: Supplier
+Person or Party chosen appropriately
+
+Expected:
+
+`The selected Role Type is not permitted for this Relationship Type.`
+
+Passed
+
+### Test 6 — Effective date validation
+
+Create a participant with
+
+effective_from = 01.01.2026
+effective_to   = 31.12.2025
+
+Expected:
+
+`Effective To must not precede Effective From.`
+
+Passed
+
+## Step 8 — Architecture Refactoring ✅ COMPLETED
+
+### 8.1 Remove ownership from business models
+
+Remove the ownership FK from:
+
+Party
+Person
+BusinessRelationship
+BusinessRelationshipParticipant
+
+Generate a migration.
+
+### 8.2 Simplify Admin
+
+Remove:
+
+OrganizationOwnedAdminMixin
+exclude = ("organization",)
+
+### 8.3 Introduce Organization as a participant identity
+
+Add a genuine participant field:
+
+organization
+party
+person
+
+to BusinessRelationshipParticipant.
+
+Now the validation becomes semantically correct.
+
+### 8.4 Update validation
+
+Identity validation now counts:
+
+organization
+party
+person
+
+only.
+
+No infrastructure concepts remain.
+
+### 8.5 Clean constants
+
+Rename any messages or comments referring to the ownership Organization where necessary.
+
+## Step 9 — Regression Testing ✅ COMPLETED
+
+Repeat all **Step 7** tests.
+
+### Test 1 
+
+Create a valid **Employment** relationship
+
+Pass
+
+### Test 2
+
+Create a **BusinessRelationshipParticipant** with both a ***Party*** and a ***Person*** populated.
+
+Passed
+
+### Test 3 — No identity specified
+
+Passed
+
+### Test 4 — Role ↔ Identity validation
+
+Passed
+
+### Test 5 — Relationship ↔ Role validation
+
+Passed
+
+### Test 6 — Effective date validation
+
+Passed
+
+### Test 7
+
+Additionally, verify the scenario that exposed today's issue:
+
+Create participant.
+Save.
+Reopen.
+Edit.
+Save again.
+
+Expected: No validation error.
+
+Passed
+
+### Commit 7
+
+S01-M01.02.07 Architecture Refactoring
+
+## Step 10 — Documentation ✅ COMPLETED
+
+- ARCH-001
+- ARCH-003
+- STD-003
+- ADR-009
+
+### Commit 8
+
+S01-M01.02.08 Documentation Update

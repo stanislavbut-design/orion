@@ -45,6 +45,8 @@ Every significant business concept shall be clearly defined before implementatio
 
 Concepts are defined independently of their technical implementation. The domain model describes the business and serves as the foundation for the application's architecture, database design, user interface and APIs.
 
+Deployment concerns shall not be modelled as business-domain concepts unless they have business semantics.
+
 Implementation should reflect the domain model rather than shape it.
 
 Changes to the domain model shall be deliberate, documented and reviewed before implementation.

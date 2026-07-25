@@ -77,6 +77,8 @@ Orion now has a stable architectural and conceptual foundation from which implem
 |                                        | S01-M01.02.04 Implement BusinessRelationship model   ||
 |                                        | S01-M01.02.05 Implement BusinessRelationshipParticipant model ||
 |                                        | S01-M01.02.06 Implement Relationship Framework validation ||
+|                                        | S01-M01.02.07 Architecture Refactoring ||
+|                                        | S01-M01.02.08 Documentation Update ||
 | Milestone 1.3 - Business Relationships |   | S01-M01-03-business-relationships.md |
 | Milestone 1.4 - Contact Information |   | S01-M01-04-contact-info.md |
 | Milestone 1.5 - Core Services |   | S01-M01-05-core-services.md |
