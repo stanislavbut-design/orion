@@ -10,9 +10,9 @@ Describe Orion's development standards.
 |------|-------|--------|----------|------------|----------------|
 | STD-001 | Coding | Approved ||| STD-001-coding.md
 | STD-002 | Database | Approved ||| STD-002-database.md
-| STD-003 | Git | Planned ||| STD-003-git.md
+| STD-003 | Code Organization | Draft ||| STD-003-code.md
 | STD-004 | Docs | Approved ||| STD-004-docs.md
-| STD-005 | Testing | Planned ||| STD-005-testing.md
+| STD-005 | Orion Commit Convention | Draft ||| STD-005-git.md
 
 ## Related Sections
 

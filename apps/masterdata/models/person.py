@@ -3,12 +3,12 @@ import uuid
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from apps.core.constants.validation import (
+from apps.core.constants.validation.masterdata import (
     PER_FIRST_NAME_REQUIRED,
     PER_LAST_NAME_REQUIRED,
 )
 
-from apps.core.constants.naming import (
+from apps.masterdata.constants.naming import (
     PER_DEFAULT_FULL_NAME_FORMAT,
     PER_DEFAULT_SHORT_NAME_FORMAT,
     FULL_NAME_FIRST_MIDDLE_LAST,

@@ -5,10 +5,6 @@ from django.db import models
 from django.db.models import Q
 from .organization import Organization
 
-PTY_EMPTY_PERSON_ERROR = (
-        "A Party of the Individual type must have the Person associated with it."
-    )
-
 class PartyTypes(models.TextChoices):
     LEGAL_ENTITY = "LEGAL_ENTITY", "Legal Entity"
     INDIVIDUAL = "INDIVIDUAL", "Individual"

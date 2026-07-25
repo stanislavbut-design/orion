@@ -1,13 +1,26 @@
 import uuid
 
+from django.core.exceptions import ValidationError
 from django.db import models
 
-from ..constants import RoleType
+from apps.core.constants.role_types import RoleType
+
 from .business_relationship import BusinessRelationship
 from .organization import Organization
 from .party import Party
 from .person import Person
 
+from apps.core.constants.relationship_matrix import (
+    ROLE_IDENTITY_MAP,
+    RELATIONSHIP_ROLE_MAP,
+)
+
+from apps.core.constants.validation.masterdata import (
+    BRP_EXACTLY_ONE_IDENTITY,
+    BRP_INVALID_DATE_RANGE,
+    BRP_ROLE_IDENTITY_MISMATCH,
+    BRP_ROLE_RELATIONSHIP_MISMATCH,
+)
 
 class BusinessRelationshipParticipant(models.Model):
     """
@@ -84,6 +97,88 @@ class BusinessRelationshipParticipant(models.Model):
         ]
         verbose_name = "Business Relationship Participant"
         verbose_name_plural = "Business Relationship Participants"
+
+    def clean(self):
+
+        super().clean()
+
+        #
+        # Exactly one Identity
+        #
+
+        identities = [
+            self.organization,
+            self.party,
+            self.person,
+        ]
+
+        identity_count = sum(
+            identity is not None
+            for identity in identities
+        )
+
+        if identity_count != 1:
+            raise ValidationError(
+                BRP_EXACTLY_ONE_IDENTITY
+            )
+
+        #
+        # Effective dates
+        #
+
+        if (
+            self.effective_from
+            and self.effective_to
+            and self.effective_to < self.effective_from
+        ):
+            raise ValidationError(
+                BRP_INVALID_DATE_RANGE
+            )
+
+        #
+        # Role ↔ Identity
+        #
+
+        expected_identity = ROLE_IDENTITY_MAP.get(
+            self.role_type
+        )
+
+        if expected_identity == "organization":
+            valid = self.organization is not None
+
+        elif expected_identity == "party":
+            valid = self.party is not None
+
+        elif expected_identity == "person":
+            valid = self.person is not None
+
+        else:
+            valid = False
+
+        if not valid:
+            raise ValidationError(
+                BRP_ROLE_IDENTITY_MISMATCH
+            )
+
+        #
+        # Relationship ↔ Role
+        #
+
+        allowed_roles = RELATIONSHIP_ROLE_MAP.get(
+            self.business_relationship.relationship_type,
+            set(),
+        )
+
+        if self.role_type not in allowed_roles:
+            raise ValidationError(
+                BRP_ROLE_RELATIONSHIP_MISMATCH
+            )
+
+    def save(self, *args, **kwargs):
+
+        self.full_clean()
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return (

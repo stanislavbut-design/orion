@@ -3,7 +3,11 @@ import uuid
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from ..constants import RelationshipType
+from apps.core.constants.relationship_types import RelationshipType
+from apps.core.constants.validation.masterdata import (
+    BRL_INVALID_DATE_RANGE,
+)
+
 from .organization import Organization
 
 
@@ -72,8 +76,7 @@ class BusinessRelationship(models.Model):
         ):
             raise ValidationError(
                 {
-                    "effective_to":
-                        "Effective To cannot be earlier than Effective From."
+                    BRL_INVALID_DATE_RANGE
                 }
             )
 

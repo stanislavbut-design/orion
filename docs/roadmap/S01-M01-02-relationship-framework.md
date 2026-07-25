@@ -17,8 +17,7 @@
 
 S01-M01.02.01 Refine ARCH-003 architectural baseline
 
-
-## Step 2 — Define Business Relationship Framework
+## Step 2 — Define Business Relationship Framework ✅ COMPLETED
 
 `business-relationship-framework.md`
 
@@ -26,63 +25,46 @@ S01-M01.02.01 Refine ARCH-003 architectural baseline
 
 S01-M01.02.02 Define Business Relationship Framework
 
-## Step 3 — Relationship and Role constants
+## Step 3 — Relationship and Role constants ✅ COMPLETED
+
+### Commit 3:
 
 S01-M01.02.03 Define Relationship and Role constants
 
+## Step 4. Implement BusinessRelationship model ✅ COMPLETED
+
+### Commit 4:
+
+S01-M01.02.04 Implement BusinessRelationship model
+
+## Step 5. BusinessRelationshipParticipant model ✅ COMPLETED
+
+`apps/masterdata/models/business_relationship_participant.py`
+
+### Commit 5:
+
+S01-M01.02.05 Implement BusinessRelationshipParticipant model
+
+## Step 6. Validation
+
+### Task 1. Create validation messages
+`apps/core/constants/validation/masterdata.py`
+
+### Task 2. Relationship Matrix constants
+
+Create `apps/core/constants/relationship_matrix.py`
+
+### Task 3. Imports
+
+In `business_relationship_participant.py`
+
+### Task 4. Add clean()
+
+### Commit 6
+
+S01-M01.02.06 Implement Relationship Framework validation
+
+## Step 7. Testing
 
 
-
-
-
-
-## Step 5 — Define Party–Role relationships
-
-This is where we establish how a Party acquires Roles.
-
-Questions to settle include:
-
-- Can a Party hold multiple Roles simultaneously? (I believe yes.)
-- Can the same Role be assigned to multiple Parties? (Again, yes.)
-- Should assignments have effective dates? (Initially no; later yes.)
-
-
-We'll document the relationship before implementing it.
-
-## Step 6 — Implement Role assignments
-
-Create the entity that associates a Party with a Role.
-
-Initially it might include:
-
-- Party
-- Role
-- Active flag
-
-
-Future versions could add:
-
-- Effective From
-- Effective To
-- Assignment reason
-
-## Step 7 — Validate the framework
-
-Test scenarios such as:
-
-- One Party with multiple Roles.
-- Multiple Parties sharing the same Role.
-- An Individual Party acting as both Customer and Supplier.
-- A legal entity acting as both Supplier and Employer.
-
-## Step 8 — Documentation and review
-
-Update ARCH-003 if necessary.
-Update the repository roadmap.
-Review naming consistency.
-
-## Commit 8
-S01-M01.02.08 Complete Role Frameworkt
-
----
 

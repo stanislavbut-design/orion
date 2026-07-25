@@ -3,7 +3,7 @@ import uuid
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from apps.core.constants.validation import (
+from apps.core.constants.validation.masterdata import (
     ORG_SINGLETON_ERROR,
     ORG_DELETE_ERROR,
     ORG_NAME_REQUIRED,

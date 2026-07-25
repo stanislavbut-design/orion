@@ -536,37 +536,46 @@ The lifecycle of a Business Relationship is governed by Business Objects.
 
 # 5. Business Rules
 
-## BRF-001
+## Framework
+
+### BRF-001
 
 Relationship Types shall be predefined by Orion.
 
-## BRF-002
+### BRF-002
 
 Every Business Relationship shall belong to exactly one Relationship Type.
 
-## BRF-003
+### BRF-003
 
 Each Relationship Type shall define two or more permitted Role Types.
 
-## BRF-004
+### BRF-004
 
 Each Role Type shall be associated with exactly one Identity Type.
 
-## BRF-005
+### BRF-005
 
 A Business Relationship shall contain exactly one participant for every mandatory Role Type unless otherwise specified by the Relationship Type.
 
-## BRF-006
+### BRF-006
 
 An Identity shall perform only Role Types permitted for its Identity Type.
 
-## BRF-007
+### BRF-007
 
 Canonical Codes are immutable identifiers.
 
-## BRF-008
+### BRF-008
 
 Business Domains classify Relationship Types but do not affect their semantics.
+
+## Participants
+
+### BRP-001
+
+Exactly one Identity shall participate in a Business Relationship Participant.
+
 
 # 6. Notes
 
