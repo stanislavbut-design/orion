@@ -5,9 +5,9 @@
 | Document ID | ARCH-03 |
 | Title | Domain Model |
 | Status | Approved |
-| Version | 1.1 |
+| Version | 1.2 |
 | Owner | Orion Project |
-| Last Updated | 2026-07-23 |
+| Last Updated | 2026-07-25 |
 | Depends On | ARCH-00 |
 | Related ADRs | None |
 
@@ -205,29 +205,110 @@ An organization-defined operational classification describing the business activ
 
 ## 3.6. Business Object
 
-A predefined Orion concept representing a business event (a document or transaction that creates or modifies Business Relationships). 
+A **Business Object** is a persistent operational artefact that records business information required to execute, control, or document a Business Process. 
 
-A **Business Object** records information that the Organization creates or manages as part of its business activities.
+Business Objects represent operational state rather than business actors. They provide the operational layer of the Orion business architecture.
 
-Unlike Identities and Roles, Business Objects are transactional in nature and normally have a defined lifecycle consisting of creation, modification and completion.
+Business Objects may be created, modified, or retired during the execution of Business Processes and Business Activities. 
 
-Every Business Object have:
+Business Activities may create new Business Objects or change the state of existing ones.
 
-- zero or one primary Business Process, and
-- zero or one primary Business Relationship.
+Business Objects may:
 
-Business Objects may reference domain entities that are the subject matter of the recorded event.
+- record business information;
+- establish or modify Business Relationships;
+- reference Core Identities;
+- reference Module Entities;
+- participate in hierarchical structures.
 
-**Examples:**
+Business Objects do not themselves define business semantics of identities or relationships; they operate upon them.
+
+### Root Business Objects
+
+A **Root Business Object** represents an independent business artefact.
+
+A Root Business Object:
+
+- has no parent Business Object;
+- may establish or modify a Business Relationship;
+- may optionally belong to a Business Process;
+- serves as the root of a Business Object hierarchy.
+
+Examples include:
 
 - Employment Agreement
 - Sales Agreement
-- Supply Agreement
-- Assignment
-- Invoice
+- Purchase Order
+- Service Agreement
+
+### Child Business Objects
+
+A **Child Business Object** is a Business Object whose business meaning depends upon another Business Object..
+
+A Child Business Object:
+
+- has exactly one parent Business Object;
+- inherits the Business Process from its root;
+- operates within the Business Relationship established by its Root Business Object;
+- never establishes or modifies a Business Relationship directly.
+
+Examples include:
+
+- Shipment Note
 - Payment
-- Journal Entry
-- Time Entry
+- Time Record
+
+### Business Object Hierarchy
+
+Business Objects may form hierarchical structures.
+
+A hierarchy consists of:
+
+- one Root Business Object;
+- zero or more Child Business Objects.
+
+The hierarchy represents a single operational context.
+
+Business Process assignment, where present, applies to the Root Business Object and is inherited by all descendants.
+
+### Relationships with Business Processes
+
+Business Processes provide the operational context in which Business Objects are created, modified, and used.
+
+Business Objects record business information required to execute, control, or document Business Processes.
+
+Business Activities performed within a Business Process may create new Business Objects or modify existing ones.
+
+**Business Activities** may:
+
+- create Business Objects;
+- modify Business Objects;
+- change Business Object status.
+
+Not every Business Object represents the final output of a Business Process.
+
+### Relationships with Business Relationships
+
+Business Relationships represent long-lived structural associations between Core Identities.
+
+Business Objects operate within those relationships.
+
+Only Root Business Objects may establish or modify Business Relationships.
+
+Child Business Objects operate within the scope of the Business Relationship established by their Root Business Object.
+
+### Relationships with Identities
+
+Business Objects may reference:
+
+- Core Identities;
+- Module Entities.
+
+Core Identities participate in Business Relationships.
+
+Module Entities remain local to their functional modules and do not participate directly in Business Relationships.
+
+Business Objects provide the operational bridge between Module Entities and the Core Identity Model.
 
 ---
 
@@ -500,9 +581,9 @@ Business Processes define operational context.
 
 ### ARCH-003-P002
 
-Every Business Process produces one or more outputs.
+Every Business Process defines one or more expected business outputs.
 
-Outputs of Business Processes are represented by Business Objects created or modified by the process.
+These outputs are represented by Business Objects created or modified through Business Activities performed within the Business Process.
 
 ### ARCH-003-P003
 
@@ -520,7 +601,7 @@ Decomposition continues until the lowest-level Business Processes are reached.
 
 Lowest-level Business Processes consist of Business Activities, representing indivisible units of work.
 
-Business Activities are recorded by Business Objects.
+Business Activities are reflected in Business Objects, either by creating new Business Objects or by changing the state of existing Business Objects.
 
 ### ARCH-003-P005
 
@@ -559,6 +640,35 @@ Child Business Objects inherit the Business Process from their parent.
 ### ARCH-003-P106
 
 The classification of Business Objects according to their effect on Business Relationships is intentionally deferred until sufficient business scenarios have been modelled.
+
+### ARCH-003-P107
+
+Business Objects represent persistent operational artefacts.
+
+They record business information required to execute, control or document Business Processes.
+
+### ARCH-003-P108
+
+Business Activities are reflected in Business Objects.
+
+A Business Activity may:
+
+- create a Business Object;
+- modify an existing Business Object;
+- change the state of an existing Business Object.
+
+### ARCH-003-P109
+
+Only Root Business Objects may establish or modify Business Relationships.
+
+Child Business Objects operate within the Business Relationship established by their Root Business Object.
+
+### ARCH-003-P110
+
+Business Objects may reference both Core Identities and Module Entities.
+
+Only Core Identities participate directly in Business Relationships.
+
 
 ## 6.3 Relationship Principles
 

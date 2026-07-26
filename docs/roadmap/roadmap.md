@@ -80,7 +80,8 @@ Orion now has a stable architectural and conceptual foundation from which implem
 |                                        | S01-M01.02.07 Architecture Refactoring ||
 |                                        | S01-M01.02.08 Documentation Update ||
 |                                        | S01-M01.02.09 Complete Identity Integrity Validation ||
-| Milestone 1.3 - Business Relationships |   | S01-M01-03-business-relationships.md |
+| Milestone 1.3 - Business Object Architecture and Operational Integration | S01.M01.03.01 Business Object Architecture and Specification | S01-M01-03-business-object-foundation.md |
+|                                        |  ||
 | Milestone 1.4 - Contact Information |   | S01-M01-04-contact-info.md |
 | Milestone 1.5 - Core Services |   | S01-M01-05-core-services.md |
 
@@ -121,18 +122,19 @@ Create the `masterdata` application and implement the Identity framework.
 - Project starts without errors.
 
 
-## Milestone 1.2 — Business Relationships and Role Participation
+## Milestone 1.2 — Business Relationships and Role Participation ✅ COMPLETED
 
 ### Objective
 
 Establish the conceptual and technical framework for modelling Business Relationships between Identities.
 
+## Milestone 1.3 — Business Object Architecture and Operational Integration
 
+### Objective
 
-## Milestone 1.3 — Business Relationships
-- BusinessRelationship
-- Relationship types
-- Relationship management
+Establish the Business Object framework without yet implementing any specific business documents.
+
+The goal is to build the infrastructure that every future document (Employment Agreement, Sales Agreement, Invoice, Purchase Order, etc.) will inherit.
 
 ## Milestone 1.4 — Contact Information
 - Address

@@ -53,6 +53,8 @@ Changes to the domain model shall be deliberate, documented and reviewed before 
 
 Stable business identities shall be modeled independently of the roles they perform. Roles describe how an identity participates in business processes and may change over time without affecting the underlying identity.
 
+---
+
 # Principle 3 — Stable Architecture
 
 Architectural concepts should be introduced only when supported by multiple concrete business scenarios.
@@ -201,6 +203,12 @@ Performance improvements should be guided by measurement rather than assumption.
 # Principle 17 - Materializing Derived Representations
 
 Whenever a business representation is deterministic and frequently queried, Orion may persist it as a derived attribute rather than recomputing it on demand.
+
+---
+
+# Principle 18 - Business Relationship Participants
+
+Only Core Identities participate in Business Relationships. Module Entities are local to their functional modules and may be promoted to Core Identities through well-defined promotion protocols.
 
 ---
 
