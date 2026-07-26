@@ -198,6 +198,10 @@ Business Objects may reference both Core Identities and Module Entities.
 
 Only Core Identities participate directly in Business Relationships.
 
+### BO-008
+
+If a Business Object is associated with a Business Process, that Business Process shall be a leaf Business Process.
+
 
 ## 12. Notes
 

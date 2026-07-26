@@ -30,3 +30,12 @@ BRP_ROLE_RELATIONSHIP_MISMATCH = "The selected Role Type is not permitted for th
 PTY_INDIVIDUAL_PERSON_REQUIRED = "An Individual Party must be associated with a Person."
 PTY_PERSON_NOT_ALLOWED = "Only Individual Parties may be associated with a Person."
 PTY_PERSON_ALREADY_ASSOCIATED = "The selected Person is already associated with another Individual Party."
+
+# BusinessProcess
+BPR_PARENT_SELF_ERROR = "A Business Process cannot be its own parent."
+
+# BusinessObject
+BO_PROCESS_NOT_LEAF_ERROR = (
+    "Only lowest-level Business Processes may be associated "
+    "with Business Objects."
+)

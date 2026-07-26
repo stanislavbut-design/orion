@@ -81,7 +81,8 @@ Orion now has a stable architectural and conceptual foundation from which implem
 |                                        | S01-M01.02.08 Documentation Update ||
 |                                        | S01-M01.02.09 Complete Identity Integrity Validation ||
 | Milestone 1.3 - Business Object Architecture and Operational Integration | S01.M01.03.01 Business Object Architecture and Specification | S01-M01-03-business-object-foundation.md |
-|                                        |  ||
+|                                        | S01.M01.03.02 Business Object Semantic Constants ||
+|                                        | S01.M01.03.03 — Business Process and Business Object Base Models ||
 | Milestone 1.4 - Contact Information |   | S01-M01-04-contact-info.md |
 | Milestone 1.5 - Core Services |   | S01-M01-05-core-services.md |
 

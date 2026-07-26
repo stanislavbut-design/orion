@@ -5,7 +5,8 @@ from .models import (
     Party, 
     Person, 
     BusinessRelationship, 
-    BusinessRelationshipParticipant
+    BusinessRelationshipParticipant,
+    BusinessProcess,
 )
 
 @admin.register(Organization)
@@ -135,4 +136,25 @@ class BusinessRelationshipParticipantAdmin(admin.ModelAdmin):
 
     search_fields = (
         "role_type",
+    )
+
+@admin.register(BusinessProcess)
+class BusinessProcessAdmin(admin.ModelAdmin):
+    list_display = (
+        "code",
+        "name",
+        "parent_process",
+    )
+
+    readonly_fields = (
+        "public_id",
+    )
+
+    search_fields = (
+        "code",
+        "name",
+    )
+
+    ordering = (
+        "code",
     )
