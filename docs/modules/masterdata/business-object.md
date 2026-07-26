@@ -184,7 +184,7 @@ Every Child Business Object has exactly one parent Business Object.
 
 ### BO-005
 
-Child Business Objects inherit the Business Process from their Root Business Object.
+If a Root Business Object is associated with a Business Process, all Child Business Objects inherit that Business Process from the Root Business Object.
 
 ### BO-006
 

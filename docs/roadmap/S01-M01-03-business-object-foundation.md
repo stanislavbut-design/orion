@@ -30,7 +30,7 @@ Refine ARCH-003 to fully define the Business Object layer.
 
 ### Commit: Not yet
 
-## Step 2 — Business Object Specification
+## Step 2 — Business Object Specification ✅ COMPLETED
 
 Create a single specification describing:
 
@@ -48,23 +48,18 @@ Create a single specification describing:
 
 S01.M01.03.01 Business Object Architecture and Specification
 
-## Step 3 — Business Object Semantic Constants
+## Step 3 — Business Object Semantic Constants ✅ COMPLETED
 
 Introduce semantic constants such as:
-```
-business_object_types.py
-business_object_status.py
-```
 
-Initially this will contain only a handful of canonical object types, for example:
-```
-EMPLOYMENT_AGREEMENT
-SALES_AGREEMENT
-SUPPLY_AGREEMENT
-SERVICE_AGREEMENT
-```
+`business_object_status.py`
 
-## Step 4 — Base BusinessObject model
+### Commit 2:
+
+S01.M01.03.02 Business Object Semantic Constants
+
+
+## Step 4 — Abstract BusinessObject model
 
 Implement the abstract base model.
 
@@ -82,7 +77,9 @@ Typical fields might include:
 
 No concrete documents yet.
 
-## Step 5 — Validation
+## Step 5 — BusinessObjectHierarchy
+
+## Step 6 — Validation
 
 Implement rules such as:
 
@@ -91,7 +88,7 @@ Implement rules such as:
 - Business Relationship must match Business Object type;
 - parent/child hierarchy validity.
 
-## Step 6 — Testing
+## Step 7 — Testing
 
 Integration tests for:
 
@@ -100,7 +97,7 @@ Integration tests for:
 - hierarchy validation;
 - Business Process inheritance.
 
-## Step 7 — Documentation
+## Step 8 — Documentation Review
 
 Update:
 
