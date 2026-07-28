@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django import forms    
 
 from .models import (
     Organization, 
@@ -8,6 +9,18 @@ from .models import (
     BusinessRelationshipParticipant,
     BusinessProcess,
 )
+
+class BusinessProcessAdminForm(forms.ModelForm):
+    class Meta:
+        model = BusinessProcess
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields["parent_process"].label_from_instance = (
+            lambda obj: f"{obj.code} — {obj.name}"
+        )
 
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
@@ -140,10 +153,13 @@ class BusinessRelationshipParticipantAdmin(admin.ModelAdmin):
 
 @admin.register(BusinessProcess)
 class BusinessProcessAdmin(admin.ModelAdmin):
+
+    form = BusinessProcessAdminForm
+    
     list_display = (
         "code",
         "name",
-        "parent_process",
+        "parent_code",
     )
 
     readonly_fields = (
@@ -158,3 +174,12 @@ class BusinessProcessAdmin(admin.ModelAdmin):
     ordering = (
         "code",
     )
+
+    @admin.display(
+        description="Parent",
+        ordering="parent_process__code",
+    )
+    def parent_code(self, obj):
+        if obj.parent_process:
+            return obj.parent_process.code
+        return ""

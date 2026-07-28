@@ -85,6 +85,7 @@ Orion now has a stable architectural and conceptual foundation from which implem
 |                                        | S01.M01.03.03 — Business Process and Business Object Base Models ||
 |                                        | S01.M01.03.04 — Business Object Hierarchy ||
 |                                        | S01.M01.03.05 — Business Object Validation ||
+|                                        | S01.M01.03.03 Business Process and Business Object Base Framework ||
 | Milestone 1.4 - Contact Information |   | S01-M01-04-contact-info.md |
 | Milestone 1.5 - Core Services |   | S01-M01-05-core-services.md |
 

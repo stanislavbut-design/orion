@@ -100,9 +100,11 @@ Implement rules such as:
 - Business Relationship must match Business Object type;
 - parent/child hierarchy validity.
 
+### Commit 5
+
 S01.M01.03.05 — Business Object Validation
 
-## Step 7 — Testing
+## Step 7 — Testing ✅ COMPLETED
 
 Integration tests for:
 
@@ -111,10 +113,36 @@ Integration tests for:
 - hierarchy validation;
 - Business Process inheritance.
 
-## Step 8 — Documentation Review
+### Test 1 — BusinessProcess creation
 
-Update:
+Passed
 
-- ARCH-003
-- Specification
-- Relationship Matrix references (where applicable)
+### Test 2 — Self-parent validation
+
+Passed
+
+### Test 3 — BusinessObject migration
+
+Passed
+
+### Test 4 — Admin review
+
+Verify the BusinessProcess admin:
+
+- public_id is read-only.
+- Ordering is by code.
+- Search works for code.
+- Search works for name.
+
+Passed
+
+### Test 5 — Leaf Business Process
+
+Passed
+
+## Step 8 — UI Refining ✅ COMPLETED
+
+### Commit 6
+
+S01.M01.03.03 Business Process and Business Object Base Framework
+

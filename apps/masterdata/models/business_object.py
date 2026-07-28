@@ -149,3 +149,4 @@ class BusinessObject(models.Model):
             obj = obj.parent
 
         return obj
+
