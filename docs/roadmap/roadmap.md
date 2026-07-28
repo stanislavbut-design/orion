@@ -87,7 +87,7 @@ Orion now has a stable architectural and conceptual foundation from which implem
 |                                        | S01.M01.03.05 — Business Object Validation ||
 |                                        | S01.M01.03.03 Business Process and Business Object Base Framework ||
 | Milestone 1.4 - Module Integration Framework | S01.M01.04.01 Module Entity Specification | S01-M01-04-module-integration-framework.md |
-
+|                                       | S01.M01.04.02 Identity Resolution Protocol Specification ||
 
 ## Objective
 

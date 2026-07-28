@@ -21,13 +21,13 @@ Formalize concepts such as:
 docs/
     modules/
         masterdata/
-            modole-entity.md
+            module-entity.md
 ```
 ### Commit 1
 
 S01.M01.04.01 Module Entity Specification
 
-## Step 2 — Promotion Protocol Specification
+## Step 2 — Identity Resolution Protocol Specification
 
 Describe:
 
@@ -36,6 +36,16 @@ Describe:
 - reference preservation;
 - audit trail;
 - idempotency.
+
+```
+docs/
+    modules/
+        masterdata/
+            identity-resolution-protocol.md
+```
+### Commit 2
+
+S01.M01.04.02 Identity Resolution Protocol Specification
 
 ## Step 3 — Module Entity Base Class
 
