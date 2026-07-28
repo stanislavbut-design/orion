@@ -47,13 +47,19 @@ docs/
 
 S01.M01.04.02 Identity Resolution Protocol Specification
 
-## Step 3 — Module Entity Base Class
+## Step 3 — Module Integration Pattern
 
 ```
-apps/common/
-    models/
-        module_entity.py
+docs/
+    modules/
+        masterdata/
+            module-integration-pattern.md
 ```
+### Commit 3
+
+S01.M01.04.03 Module Integration Pattern
+
+
 
 ## Step 4 — Promotion Service
 
