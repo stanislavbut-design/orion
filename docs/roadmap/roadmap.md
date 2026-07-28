@@ -86,8 +86,8 @@ Orion now has a stable architectural and conceptual foundation from which implem
 |                                        | S01.M01.03.04 — Business Object Hierarchy ||
 |                                        | S01.M01.03.05 — Business Object Validation ||
 |                                        | S01.M01.03.03 Business Process and Business Object Base Framework ||
-| Milestone 1.4 - Contact Information |   | S01-M01-04-contact-info.md |
-| Milestone 1.5 - Core Services |   | S01-M01-05-core-services.md |
+| Milestone 1.4 - Module Integration Framework | S01.M01.04.01 Module Entity Specification | S01-M01-04-module-integration-framework.md |
+
 
 ## Objective
 
@@ -132,7 +132,7 @@ Create the `masterdata` application and implement the Identity framework.
 
 Establish the conceptual and technical framework for modelling Business Relationships between Identities.
 
-## Milestone 1.3 — Business Object Architecture and Operational Integration
+## Milestone 1.3 — Business Object Architecture and Operational Integration ✅ COMPLETED
 
 ### Objective
 
@@ -140,14 +140,11 @@ Establish the Business Object framework without yet implementing any specific bu
 
 The goal is to build the infrastructure that every future document (Employment Agreement, Sales Agreement, Invoice, Purchase Order, etc.) will inherit.
 
-## Milestone 1.4 — Contact Information
-- Address
-- ContactMethod
-- Validation and administration
+## Milestone 1.4 — Module Integration Framework
 
-## Milestone 1.5 — Core Services
-- Common managers
-- QuerySets
-- Validation
-- Reusable services
+### Objective
+
+Define how module-specific entities coexist with the Core Domain while preserving a single source of truth for Core Identities.
+
+
 
