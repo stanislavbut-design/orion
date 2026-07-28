@@ -83,6 +83,7 @@ Orion now has a stable architectural and conceptual foundation from which implem
 | Milestone 1.3 - Business Object Architecture and Operational Integration | S01.M01.03.01 Business Object Architecture and Specification | S01-M01-03-business-object-foundation.md |
 |                                        | S01.M01.03.02 Business Object Semantic Constants ||
 |                                        | S01.M01.03.03 — Business Process and Business Object Base Models ||
+|                                        | S01.M01.03.04 — Business Object Hierarchy ||
 | Milestone 1.4 - Contact Information |   | S01-M01-04-contact-info.md |
 | Milestone 1.5 - Core Services |   | S01-M01-05-core-services.md |
 

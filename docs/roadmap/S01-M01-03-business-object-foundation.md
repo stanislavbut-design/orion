@@ -59,7 +59,7 @@ Introduce semantic constants such as:
 S01.M01.03.02 Business Object Semantic Constants
 
 
-## Step 4 — Business Process and Business Object Base Models
+## Step 4 — Business Process and Business Object Base Models ✅ COMPLETED
 
 Implement the abstract base models.
 
@@ -76,16 +76,20 @@ Typical fields might include:
 - timestamps
 
 No concrete documents yet.
-
-`apps/masterdata/models/business_process.py`
-
-
+```
+apps/masterdata/models/business_process.py`
+apps/masterdata/models/business_object.py
+```
 
 ### Commit 3
 
 S01.M01.03.03 — Business Process and Business Object Base Models
 
-## Step 5 — BusinessObjectHierarchy
+## Step 5 — BusinessObjectHierarchy ✅ COMPLETED
+
+### Commit 4
+
+S01.M01.03.04 — Business Object Hierarchy
 
 ## Step 6 — Validation
 

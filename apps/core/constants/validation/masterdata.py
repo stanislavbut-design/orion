@@ -35,6 +35,8 @@ PTY_PERSON_ALREADY_ASSOCIATED = "The selected Person is already associated with 
 BPR_PARENT_SELF_ERROR = "A Business Process cannot be its own parent."
 
 # BusinessObject
+BO_PARENT_SELF_ERROR = "A Business Object cannot be its own parent."
+BO_DATE_RANGE_ERROR = "Effective To cannot be earlier than Effective From."
 BO_PROCESS_NOT_LEAF_ERROR = (
     "Only lowest-level Business Processes may be associated "
     "with Business Objects."

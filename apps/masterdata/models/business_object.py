@@ -12,6 +12,8 @@ from .business_process import BusinessProcess
 
 from apps.core.constants.validation.masterdata import (
     BO_PROCESS_NOT_LEAF_ERROR,  
+    BO_DATE_RANGE_ERROR,
+    BO_PARENT_SELF_ERROR,
 )
 
 
@@ -31,6 +33,14 @@ class BusinessObject(models.Model):
         default=uuid4,
         editable=False,
         unique=True,
+    )
+
+    parent = models.ForeignKey(
+        "self",
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name="children",
     )
 
     business_process = models.ForeignKey(
@@ -66,9 +76,23 @@ class BusinessObject(models.Model):
 
     class Meta:
         abstract = True
-
+        
     def clean(self):
         super().clean()
+
+        if self.parent == self:
+            raise ValidationError(
+                BO_PARENT_SELF_ERROR
+            )
+
+        if (
+            self.effective_from
+            and self.effective_to
+            and self.effective_to < self.effective_from
+        ):
+            raise ValidationError(
+                BO_DATE_RANGE_ERROR
+            )
 
         if (
             self.business_process
@@ -77,3 +101,17 @@ class BusinessObject(models.Model):
             raise ValidationError(
                 BO_PROCESS_NOT_LEAF_ERROR
             )
+
+    @property
+    def is_root(self):
+        return self.parent is None
+
+    @property
+    def root(self):
+
+        obj = self
+
+        while obj.parent is not None:
+            obj = obj.parent
+
+        return obj
