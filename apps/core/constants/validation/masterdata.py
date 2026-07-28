@@ -36,8 +36,10 @@ BPR_PARENT_SELF_ERROR = "A Business Process cannot be its own parent."
 
 # BusinessObject
 BO_PARENT_SELF_ERROR = "A Business Object cannot be its own parent."
+BO_PARENT_CYCLE_ERROR = "A circular Business Object hierarchy is not allowed."
 BO_DATE_RANGE_ERROR = "Effective To cannot be earlier than Effective From."
 BO_PROCESS_NOT_LEAF_ERROR = (
     "Only lowest-level Business Processes may be associated "
     "with Business Objects."
 )
+BO_PROCESS_INHERITANCE_ERROR = "Child Business Objects must inherit the Business Process from the Root Business Object."

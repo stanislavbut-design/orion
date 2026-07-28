@@ -91,7 +91,7 @@ S01.M01.03.03 — Business Process and Business Object Base Models
 
 S01.M01.03.04 — Business Object Hierarchy
 
-## Step 6 — Validation
+## Step 6 — Validation ✅ COMPLETED
 
 Implement rules such as:
 
@@ -99,6 +99,8 @@ Implement rules such as:
 - child objects inherit Business Process;
 - Business Relationship must match Business Object type;
 - parent/child hierarchy validity.
+
+S01.M01.03.05 — Business Object Validation
 
 ## Step 7 — Testing
 

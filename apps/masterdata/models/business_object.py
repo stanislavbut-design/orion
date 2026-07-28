@@ -14,6 +14,8 @@ from apps.core.constants.validation.masterdata import (
     BO_PROCESS_NOT_LEAF_ERROR,  
     BO_DATE_RANGE_ERROR,
     BO_PARENT_SELF_ERROR,
+    BO_PARENT_CYCLE_ERROR,
+    BO_PROCESS_INHERITANCE_ERROR,
 )
 
 
@@ -78,12 +80,29 @@ class BusinessObject(models.Model):
         abstract = True
         
     def clean(self):
+
         super().clean()
 
         if self.parent == self:
             raise ValidationError(
                 BO_PARENT_SELF_ERROR
             )
+
+        #
+        # Circular hierarchy
+        #
+
+        ancestor = self.parent
+
+        while ancestor is not None:
+
+            if ancestor == self:
+                raise ValidationError(
+                    BO_PARENT_CYCLE_ERROR
+                )
+
+            ancestor = ancestor.parent
+
 
         if (
             self.effective_from
@@ -101,6 +120,21 @@ class BusinessObject(models.Model):
             raise ValidationError(
                 BO_PROCESS_NOT_LEAF_ERROR
             )
+
+        #
+        # Business Process inheritance
+        #
+
+        if self.parent is not None:
+
+            root = self.root
+            
+            if root is not self:
+
+                if self.business_process != root.business_process:
+                    raise ValidationError(
+                        BO_PROCESS_INHERITANCE_ERROR
+                    )
 
     @property
     def is_root(self):
