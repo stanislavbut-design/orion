@@ -89,6 +89,7 @@ Orion now has a stable architectural and conceptual foundation from which implem
 | Milestone 1.4 - Module Integration Framework | S01.M01.04.01 Module Entity Specification | S01-M01-04-module-integration-framework.md |
 |                                        | S01.M01.04.02 Identity Resolution Protocol Specification ||
 |                                        | S01.M01.04.03 Module Integration Pattern ||
+|                                        | S01.M01.04.04 Identity Resolution Service Architecture |
 
 ## Objective
 
@@ -141,7 +142,7 @@ Establish the Business Object framework without yet implementing any specific bu
 
 The goal is to build the infrastructure that every future document (Employment Agreement, Sales Agreement, Invoice, Purchase Order, etc.) will inherit.
 
-## Milestone 1.4 — Module Integration Framework
+## Milestone 1.4 — Module Integration Framework ✅ COMPLETED
 
 ### Objective
 
