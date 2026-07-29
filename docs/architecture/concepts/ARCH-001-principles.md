@@ -210,6 +210,10 @@ Whenever a business representation is deterministic and frequently queried, Orio
 
 Only Core Identities participate in Business Relationships. Module Entities are local to their functional modules and may be promoted to Core Identities through well-defined promotion protocols.
 
+# Principle 19 - Behavioral Extension
+
+When multiple implementations of the same decision logic are expected, Orion shall prefer composition through interchangeable Strategies rather than inheritance or conditional branching.
+
 ---
 
 # Decision Checklist

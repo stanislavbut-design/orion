@@ -39,30 +39,42 @@ Describe:
 
 ```
 docs/
-    modules/
-        masterdata/
+    architecture\
+        services\
             identity-resolution-protocol.md
 ```
 ### Commit 2
 
 S01.M01.04.02 Identity Resolution Protocol Specification
 
-## Step 3 — Module Integration Pattern
+## Step 3 — Module Integration
 
 ```
 docs/
-    modules/
-        masterdata/
-            module-integration-pattern.md
+    architecture\
+        services\
+            module-integration.md
 ```
 ### Commit 3
 
 S01.M01.04.03 Module Integration Pattern
 
+## Step 4 — Identity Resolution Service Architecture
+
+```
+docs/
+    architecture\s
+        ervices\
+            identity-resolution-service.md
+```
+### Commit 4
+
+S01.M01.04.04 Identity Resolution Service Architecture
+
+## Step 5 — Identity Resolution Service Framework
 
 
-## Step 4 — Promotion Service
 
-## Step 5 — Validation
+## Step 6 — Validation
 
-## Step 6 — Testing
+## Step 7 — Testing

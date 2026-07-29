@@ -1,10 +1,10 @@
-# Module Integration Pattern
+# Module Integration
 
 ## 1. Purpose
 
-The Module Integration Pattern defines the architectural contract by which functional modules participate in the Orion Core Domain while remaining independent of it.
+The **Module Integration** defines the architectural contract by which functional modules participate in the Orion Core Domain while remaining independent of it.
 
-The pattern specifies how module-specific models interact with the Core through Identity Resolution without requiring inheritance from common framework classes.
+The Module Integration specifies how module-specific models interact with the Core through Identity Resolution without requiring inheritance from common framework classes.
 
 ---
 
