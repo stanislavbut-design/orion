@@ -1,6 +1,6 @@
 # Roadmap
 
-# Stage 0 — Foundation ✅ Completed
+# Phase 0 — Foundation ✅ Completed
 
 | Completion Date | 2026-07-17 |
 |----------|-------|
@@ -56,7 +56,7 @@ Orion now has a stable architectural and conceptual foundation from which implem
 
 ---
 
-# Stage 1 — Core Domain Foundation
+# Phase 1 — Core Domain Foundation
 
 | Completion Date | YYYY-MM-DD |
 |----------|-------|
@@ -90,6 +90,8 @@ Orion now has a stable architectural and conceptual foundation from which implem
 |                                        | S01.M01.04.02 Identity Resolution Protocol Specification ||
 |                                        | S01.M01.04.03 Module Integration Pattern ||
 |                                        | S01.M01.04.04 Identity Resolution Service Architecture |
+|                                        | S01.M01.04.05 Module Integration Framework Complete |
+| Milestone 1.5: Architectural Review   | | S01-M01-05-architectural-review.md |
 
 ## Objective
 
@@ -148,5 +150,5 @@ The goal is to build the infrastructure that every future document (Employment A
 
 Define how module-specific entities coexist with the Core Domain while preserving a single source of truth for Core Identities.
 
-
+## Milestone 1.5: Architectural Review
 

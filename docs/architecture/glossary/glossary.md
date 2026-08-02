@@ -4,14 +4,12 @@
 
 | Property | Value |
 |----------|-------|
-| Document ID | GLOSSARY |
+| Document ID | GLO-001 |
 | Title | Glossary |
 | Status | Draft |
 | Version | 1.0 |
 | Owner | Orion Project |
 | Last Updated | 2026-07-14 |
-
-
 
 ---
 

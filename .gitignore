@@ -42,3 +42,6 @@ htmlcov/
 # Excel
 *.xlsx
 *.xls
+
+#Old files
+*.bak

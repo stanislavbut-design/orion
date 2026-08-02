@@ -1,4 +1,4 @@
-# Stage 1 - Core Domain Foundation
+# Phase 1 - Core Domain Foundation
 
 # Milestone 1.3 — Business Object Architecture and Operational Integration
 

@@ -1,8 +1,7 @@
-# Stage 1 
+# Phase 1 
 
 ## Milestone 1.1
 
-- Identity Relationships.
 - Address entity.
 - Contact Method entity.
 - Identity Document entity.

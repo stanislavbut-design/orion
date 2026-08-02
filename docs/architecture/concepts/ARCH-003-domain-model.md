@@ -5,10 +5,10 @@
 | Document ID | ARCH-03 |
 | Title | Domain Model |
 | Status | Approved |
-| Version | 1.2 |
+| Version | 2.0 |
 | Owner | Orion Project |
-| Last Updated | 2026-07-25 |
-| Depends On | ARCH-00 |
+| Last Updated | 2026-08-02 |
+| Depends On | ARCH-000 |
 | Related ADRs | None |
 
 ---
@@ -52,12 +52,13 @@ The conceptual domain model represents business concepts independently of the le
 
 The Business Architecture defines the stable concepts used throughout Orion. Module-specific specifications extend this architecture but shall not contradict it.
 
-Orion models a business through a layered architecture. Operational concepts describe how work is performed, structural concepts describe stable business identities and relationships, while Business Relationships connect both layers.
+Orion models a business through a layered architecture. 
+
+Operational concepts describe how work is performed. Structural concepts describe the persistent entities and associations that define the business. The Bridge Layer connects operational activities with the underlying business structure.
 
 # 2.2 Implicit Ownership
 
 An Orion installation represents a single tenant. Ownership of business records is therefore implicit and is not represented in the domain model.
-
 
 ## 2.3. Architecture Layers
 
@@ -72,114 +73,252 @@ The domain taxonomy make a distinction between categories that belong to the **B
 │     └── Business Relationship
 │
 └── Structural Layer
-      ├── Relationship Type
-      ├── Role Type
-      └── Identity
+    ├── Enterprise Root
+    ├── Core Entity
+    ├── Role Type
+    ├── Relationship Type
+    └── Structural Association
 ```
-## 2.4. Conceptual Diagram
 
-```mermaid
-flowchart TD
-
-    subgraph Operational["Operational Layer"]
-        BP["Business Process"]
-        BO["Business Object"]
-    end
-
-    subgraph Bridge["Bridge Layer"]
-        BR["Business Relationship"]
-    end
-
-    subgraph Structural["Structural Layer"]
-        RT["Relationship Type"]
-
-        R1["Role Type"]
-        R2["Role Type"]
-
-        I1["Identity"]
-        I2["Identity"]
-    end
-
-    BP --> BO
-    BO -->|creates / modifies| BR
-    BR -->|is an instance of| RT
-
-    RT -->|defines permitted| R1
-    RT -->|defines permitted| R2
-
-    R1 -->|performed by| I1
-    R2 -->|performed by| I2
+### Structural Layer
 ```
+Structural Layer
+│
+├── Enterprise Root
+│     └── Organization
+│
+├── Core Entities
+|     |
+|     ├── Business Actors
+│     |     ├── Party
+│     |     └── Person
+|     |
+|     ├── Enterprise Objects
+|     |     ├── Asset
+|     |     ├── Product
+|     |     └── Project
+|     |
+|     └── Organizational Entities
+│           ├── Department
+│           └── Responsibility Center
+│
+├── Structural Associations
+|     ├── Identity Relationship
+|     ├── Structural Relationship
+|     └── Business Relationship
+|
+├── Role Type
+└── Relationship Type
+```
+
 ---
 
-# 3. Core Concepts
+# 3. Architectural Concepts
 
-## 3.1. Identity
+## 3.1. Enterprise Root - Organization
 
-The Identity model defines the fundamental business identities recognised by Orion and the relationships between them.
+### Purpose
 
-An **Identity** represents something that exists independently and has its own lifecycle.
+Organization is the root business concept within Orion.
 
-An Identity remains the same even if the roles it performs, the relationships it participates in, or the business activities it undertakes change over time.
+The Organization establishes the highest boundary for ownership, security, configuration and management reporting. All business concepts managed by Orion belong to exactly one Organization, and shall not be shared across Organizations.
 
-An Identity is independent of business processes. Roles, business relationships and business objects reference identities rather than defining them.
+### Definition
 
-**Examples:**
+An **Organization** represents the business as a whole.
 
-- Organization
+It defines the scope within which all core entities, business processes and business objects exist.
+
+An Organization is not necessarily a legal entity.
+
+### Characteristics:
+- Exactly one Organization exists within an Orion installation.
+- An Organization implicitly owns all Core Entities.
+- The Organization exists for the lifetime of the installation.
+- The Organization name may be changed, but the Organization itself cannot be replaced or deleted.
+
+---
+
+## 3.2. Core Entity
+
+### 3.2.1. Definition
+
+A **Core Entity** is a persistent business concept that possesses independent business meaning, identity, and lifecycle.
+
+Core Entities exist independently of individual business activities and may be referenced across multiple capabilities throughout Orion.
+
+Core Entities form the stable structural foundation upon which Business Relationships, Business Processes, and Business Objects operate.
+
+
+### 3.2.2. Characteristics
+
+A Core Entity:
+
+- possesses independent business meaning;
+- has persistent identity;
+- has an independent lifecycle;
+- may participate in Structural Associations;
+- may be referenced by Business Objects;
+- is maintained through the Master Data capability.
+
+### 3.2.3. Business Actors
+
+Business Actors represent entities capable of participating directly in Business Relationships through defined Roles.
+
+Examples:
 - Party
 - Person
-- Identity Relationship
 
-``` text
-Identity
-├── Organization
-├── Party
-├── Person
-└── Identity Relationships
-      ├── Embodiment
-      └── Representation
+### Party
+
+#### Purpose
+
+A **Party** is the Core Entity representing business subjects, which Orion interacts with.
+
+#### Definition
+
+A **Party** represents an identifiable entity participating in, or interacting with, business activities of the Organization. A Party may be a legal entity, an individual acting in a business capacity, or another type of organization with which the Organization interacts (such as a government authority, financial institution, or non-profit organization).
+
+A Party exists independently of the roles it performs and provides a stable business identity throughout its lifecycle.
+
+The Party concept allows Orion to represent business participants without duplicating identity information when a participant performs multiple business roles.
+
+### Person
+
+#### Purpose
+
+A **Person** is the Core Entity representing individuals, which Orion interacts with.
+
+### Definition
+
+A **Person** represents an individual known to Orion.
+
+A Person is structurally independent of any particular Party and may be associated with one or more Parties through Identity Relationships.
+
+A Person represents the individual, whereas a Party represents the business entity through which that individual participates in business.
+
+Examples include:
+- employees;
+- sole traders;
+- company directors;
+- accountants;
+- customer contacts;
+- supplier representatives.
+
+A Person may exist even when not currently associated with any Party.
+
+---
+
+### 3.2.4. Enterprise Objects
+
+Enterprise Objects represent persistent business concepts upon which business activities are performed rather than entities performing those activities.
+
+Examples:
+- Asset
+- Product
+- Project
+
+### Asset  
+
+An **Asset** is a Core Entity representing a specific identifiable resource of an Organization that has persistent identity and may be referenced by Business Objects.
+
+### Product 
+
+A **Product** is a Core Entity representing a good or service that has persistent identity within an Organization and may be referenced by Business Objects.
+
+### Project 
+
+A **Project** is a Core Entity representing a persistent body of work undertaken by an Organization to achieve one or more organizational objectives within a defined scope.
+
+
+### 3.2.5. Organizational Entities
+
+Organizational Entities describe the internal organisational structure of the enterprise independently of legal structure.
+
+Examples:
+- Department
+- Responsibility Center
+
+### Department
+
+A **Department** is a Core Entity representing a persistent organizational unit within a Company.
+
+### Responsibility Center
+
+A **Responsibility Center** is a Core Entity representing a persistent functional area of accountability within an Organization.
+
+---
+
+## 3.3. Structural Association
+
+A **Structural Association** is a persistent association between Core Entities that exists independently of individual business activities.
+
+Structural Associations define stable structural context for operational activities.
+
+
+## 3.3.1. Identity Relationships
+
+An **Identity Relationship** defines a structural association between entities independently of any business process.
+
+### Embodiment
+
+Embodiment associates a **Party** of type *Individual* with the **Person** whom it represents.
+
+Characteristics:
+- mandatory for Parties of type *Individual*;
+- exactly one associated Person;
+- immutable throughout the lifetime of the Party.
+
+Example:
+```text
+Party (John Smith Trading)
+        │
+        └── embodies
+                │
+                ▼
+          Person (John Smith)
 ```
----
+### Association
 
-## 3.2. Role Type
+Association associates a **Party** with one or more **Persons** with a specified function.
 
-A predefined Orion classification describing the function performed by an Identity within a particular Relationship Type.
+Examples include:
+- Director
+- Accountant
+- Sales Contact
+- Legal Representative
 
-A Role defines the business capabilities available to an Identity and contains only business data specific to that participation.
+Characteristics:
+- optional;
+- many-to-many;
+- time-dependent;
+- historical.
 
-Roles do not exist independently from the Identity that performs them.
+```text
+Party (ABC Ltd.)
+        │
+        ├── Director ─────► John Smith
+        ├── Accountant ───► Mary Brown
+        └── Contact ──────► Peter White
+```
 
-Roles have no independent existence outside a Business Relationship.
+### 3.3.2. Structural Relationship
 
-A single Identity may perform multiple different roles simultaneously. Each Identity may perform each role at most once.
+A **Structural Relationship** defines the organisational association between Departments and Responsibility Centers.
 
+Structural Relationships are hierarchical and follow the inheritance rules defined by the participating Core Entities.
 
-**Examples:**
+Structural Relationships describe internal organisational structure independently of Business Relationships.
 
-- Company
-- Customer
-- Supplier
-- Partner
-- Employee
-- User
+### 3.3.3. Business Relationship
 
----
-
-## 3.3. Relationship Type
-
-A predefined Orion classification defining the permitted participant Identity types and the Roles they may perform.
-
----
-
-## 3.4. Business Relationship
-
-A business fact connecting Identities according to a predefined Relationship Type.
+A **Business Relationship** is a persistent Structural Association connecting Business Actors according to a predefined Relationship Type.
 
 Each participant performs exactly one Role within that relationship.
 
-Relationships define the participants in business activity independently of the documents or transactions that may formalize or result from those associations. Relationships have their own lifecycle and business rules but exist only because the connected concepts exist.
+Relationships define the participants in business activity independently of the documents or transactions that may formalize or result from those associations. 
 
+Relationships have their own lifecycle and business rules but exist only because the connected concepts exist.
 
 **Examples:**
 
@@ -190,7 +329,37 @@ Relationships define the participants in business activity independently of the 
 
 ---
 
-## 3.5. Business Process
+## 3.4. Role Type
+
+A predefined Orion classification describing the function performed by a Core Entity within a particular Relationship Type.
+
+Only Business Actors may participate in Business Relationships, and therefore play a Role.
+
+A Role defines the business capabilities available to a Core Entity and contains only business data specific to that participation.
+
+Roles do not exist independently from the Core Entity that performs them.
+
+Roles have no independent existence outside a Business Relationship.
+
+A single Core Entity may perform multiple different roles simultaneously. Each Core Entity may perform each role at most once.
+
+**Examples:**
+- Company
+- Customer
+- Supplier
+- Partner
+- Employee
+- User
+
+---
+
+## 3.5. Relationship Type
+
+A predefined Orion classification defining the permitted participant Business Actor types and the Roles each participant may perform.
+
+---
+
+## 3.6. Business Process
 
 An organization-defined operational classification describing the business activity within which Business Objects are used. Business Processes provide operational context and reporting dimensions but do not determine business semantics.
 
@@ -203,7 +372,7 @@ An organization-defined operational classification describing the business activ
 
 ---
 
-## 3.6. Business Object
+## 3.7. Business Object
 
 A **Business Object** is a persistent operational artefact that records business information required to execute, control, or document a Business Process. 
 
@@ -217,11 +386,11 @@ Business Objects may:
 
 - record business information;
 - establish or modify Business Relationships;
-- reference Core Identities;
+- reference Core Entities;
 - reference Module Entities;
 - participate in hierarchical structures.
 
-Business Objects do not themselves define business semantics of identities or relationships; they operate upon them.
+Business Objects record operational state while relying upon the semantics defined by Core Entities, Structural Associations and Relationship Types.
 
 ### Root Business Objects
 
@@ -243,7 +412,7 @@ Examples include:
 
 ### Child Business Objects
 
-A **Child Business Object** is a Business Object whose business meaning depends upon another Business Object..
+A **Child Business Object** is a Business Object whose business meaning depends upon another Business Object.
 
 A Child Business Object:
 
@@ -289,7 +458,7 @@ Not every Business Object represents the final output of a Business Process.
 
 ### Relationships with Business Relationships
 
-Business Relationships represent long-lived structural associations between Core Identities.
+Business Relationships represent long-lived structural associations between Core Entities.
 
 Business Objects operate within those relationships.
 
@@ -297,21 +466,20 @@ Only Root Business Objects may establish or modify Business Relationships.
 
 Child Business Objects operate within the scope of the Business Relationship established by their Root Business Object.
 
-### Relationships with Identities
+### Relationships with Entities
 
 Business Objects may reference:
 
-- Core Identities;
+- Core Entities;
 - Module Entities.
 
-Core Identities participate in Business Relationships.
+Core Entities participate in Business Relationships.
 
 Module Entities remain local to their functional modules and do not participate directly in Business Relationships.
 
-Business Objects provide the operational bridge between Module Entities and the Core Identity Model.
+Business Objects provide the operational bridge between Module Entities and the Core Entity Model.
 
 ---
-
 
 ## Conceptual Example
 
@@ -330,250 +498,17 @@ Participants:
 
 ABC Ltd
     Role Type: Employer
-    Identity: Party
+    Core Entity: Party
 
 John Smith
     Role Type: Employee
-    Identity: Person
+    Core Entity: Person
 ```
-
-
-# 4. Identity Architecture
-
-## 4.1. Overview
-
-The Identity Architecture defines the stable business participants recognised by Orion and the relationships between them. These identities form the foundation upon which Business Relationships, Roles and Business Objects operate.
-
-```mermaid
-flowchart TD
-
-    Organization --> Party
-    Organization --> Person
-
-    Party --> Company["Company<br/>(Role)"]
-    Party --> Customer["Customer <br/>(Role)"]
-    Party --> Supplier["Supplier <br/>(Role)"]
-    Party --> Partner["Partner <br/>(Role)"]
-
-    Person --> User["User <br/>(Role)"]
-    Person --> Employee["Employee <br/>(Role)"]
-    Person --> Contact["Contact <br/>(Role)"]
-```
-
-
-## 4.2. Organization
-
-### Purpose
-
-Organization is the root business concept within Orion.
-
-The Organization establishes the highest boundary for ownership, security, configuration and management reporting. All business concepts managed by Orion belong to exactly one Organization, and shall not be shared across Organizations.
-
-### Definition
-
-An **Organization** represents the business as a whole.
-
-It defines the scope within which all business identities, business processes and business objects exist.
-
-An Organization is not necessarily a legal entity.
-
-### Characteristics:
-- Exactly one Organization exists within an Orion installation.
-- An Organization owns Parties and Persons.
-- The Organization exists for the lifetime of the installation.
-- The Organization name may be changed, but the Organization itself cannot be replaced or deleted.
-
 ---
 
-## 4.3. Party
+# 4. Architectural Principles
 
-### Purpose
-
-A Party is the business identity through which Orion interacts with other business subjects.
-
-### Definition
-
-A **Party** represents an identifiable business identity participating in, or interacting with, business activities of the Organization. A Party may be a legal entity, an individual acting in a business capacity, or another type of organization with which the Organization interacts (such as a government authority, financial institution, or non-profit organization).
-
-A Party exists independently of the roles it performs and provides a stable identity throughout its lifecycle.
-
-The Party concept allows Orion to represent business participants without duplicating identity information when a participant performs multiple business roles.
-
-### Design Evolution
-
-During the design of Orion, Company was initially modeled as a core business identity.
-
-Following further analysis, it became clear that Company represents a business role performed by a Party rather than an independent identity. This change simplified the domain model and established the principle that stable identities are modeled independently from the roles they perform.
-
----
-
-## 4.4.Person
-
-### Purpose
-
-A Person is the business identity through which Orion interacts with individuals.
-
-### Definition
-
-A **Person** represents an individual known to Orion.
-
-A Person is structurally independent of any particular Party and may be associated with one or more Parties through Identity Relationships.
-
-A Person represents the individual, whereas a Party represents the business identity through which that individual participates in business.
-
-Examples include:
-- employees;
-- sole traders;
-- company directors;
-- accountants;
-- customer contacts;
-- supplier representatives.
-
-A Person may exist even when not currently associated with any Party.
-
----
-
-## 4.5. Identity Relationships
-
-### Purpose
-
-Identity Relationships define structural associations between identities independently of any business process.
-
-### Embodiment
-
-Embodiment associates a **Party** of type *Individual* with the **Person** whom it represents.
-
-Characteristics:
-- mandatory for Parties of type *Individual*;
-- exactly one associated Person;
-- immutable throughout the lifetime of the Party.
-
-Example:
-```text
-Party (John Smith Trading)
-        │
-        └── embodies
-                │
-                ▼
-          Person (John Smith)
-```
-### Association
-
-Association associates a **Party** with one or more **Persons** with a specified function.
-
-Examples include:
-- Director
-- Accountant
-- Sales Contact
-- Legal Representative
-
-Characteristics:
-- optional;
-- many-to-many;
-- time-dependent;
-- historical.
-
-```text
-Party (ABC Ltd.)
-        │
-        ├── Director ─────► John Smith
-        ├── Accountant ───► Mary Brown
-        └── Contact ──────► Peter White
-```
-### Relationship to Business Relationships
-
-Identity Relationships describe how identities are structurally associated.
-
-Business Relationships describe commercial or organisational relationships between business participants.
-
-The two concepts are independent and shall not be confused.
-
-
-## 5. Relationship Matrix
-
-This matrix shows how identities and their roles are related in the business context. This is illustrative and not to be considered conclusive.
-
-
-<table>
-  <thead>
-    <tr>
-        <th colspan="1">Identities</th>
-        <th colspan="1"></th>
-        <th colspan="1">Party</th>
-        <th colspan="4">Person</th>            
-    </tr>
-        <th></th>
-        <th>Role Types</th>
-        <th>Company</th>
-        <th>Employee</th>
-        <th>Director</th>
-        <th>Contact</th>
-        <th>User</th>
-    <tr>
-        <th>Party</th>
-        <th>Customer</th>
-        <th>Sales Contract</th>
-        <th>Responsible Person</th>
-        <th>N/A</th>
-        <th>Representative</th>
-        <th>N/A</th>                          
-    </tr>
-    <tr>
-        <th></th>
-        <th>Supplier</th>
-        <th>Supply Agreement</th>
-        <th>Responsible Person</th>
-        <th>N/A</th>
-        <th>Representative</th>                        
-        <th>N/A</th>    
-    </tr>
-    <tr>
-        <th></th>
-        <th>Partner</th>
-        <th>Shareholder Relationship</th>
-        <th>Responsible Person</th>
-        <th>N/A</th>
-        <th>Representative</th>                        
-        <th>N/A</th>    
-    </tr>
-    <tr>
-        <th></th>
-        <th>Partner</th>
-        <th>Loan Agreement</th>
-        <th>Responsible Person</th>
-        <th>N/A</th>
-        <th>Representative</th>                        
-        <th>N/A</th>    
-    </tr>
-    <tr>
-        <th></th>
-        <th>Company</th>
-        <th>N/A</th>
-        <th>Employment Agreement</th>
-        <th>Corporate Governance Arrangement</th>
-        <th>N/A</th>                        
-        <th>Access Privileges</th>    
-    </tr>
-    <tr>
-        <th>Organization</th>
-        <th>Owner</th>
-        <th>Ownership</th>
-        <th>Ownership</th>
-        <th>--</th>
-        <th>--</th>                        
-        <th>Access Privileges</th>    
-    </tr>
-  </thead>
-  <tbody>
-
-  </tbody>
-</table>
-
----
-
-# 6. Architectural Principles
-
-## 6.1 Business Process Principles
+## 4.1 Business Process Principles
 
 ### ARCH-003-P001
 
@@ -609,11 +544,11 @@ Business Processes are defined by the Organization.
 
 Orion imposes no predefined catalogue of Business Processes.
 
-## 6.2 Business Object Principles
+## 4.2 Business Object Principles
 
 ### ARCH-003-P101
 
-Business Objects define business semantics.
+Business Objects define operational behaviour.
 
 ### ARCH-003-P102
 
@@ -665,12 +600,12 @@ Child Business Objects operate within the Business Relationship established by t
 
 ### ARCH-003-P110
 
-Business Objects may reference both Core Identities and Module Entities.
+Business Objects may reference both Core Entities and Module Entities.
 
-Only Core Identities participate directly in Business Relationships.
+Only Core Entities participate directly in Business Relationships.
 
 
-## 6.3 Relationship Principles
+## 4.3 Relationship Principles
 
 ### ARCH-003-P201
 
@@ -686,28 +621,77 @@ Relationship Types define the permitted Roles.
 
 ### ARCH-003-P204
 
-Role Types define the Identity types permitted to perform them.
+Role Types define the Business Actor types permitted to perform them.
 
 ### ARCH-003-P205
 
 Business Relationships are instances of Relationship Types.
 
-## 6.4 Identity Principles
+## 4.4 Core Entity Principles
 
 ### ARCH-003-P301
 
-Identities represent stable business participants independent of their relationships.
+Core Entities represent stable business concepts possessing independent business meaning, lifecycle and identity.
 
 ### ARCH-003-P302
 
-Business Relationships connect Identities without altering their identity.
+Business Relationships connect Core Entities without altering their identity.
 
 ### ARCH-003-P303
 
-Roles describe functions performed by Identities within Business Relationships.
+Roles describe functions performed by Core Entities within Business Relationships.
 
----
+## 4.5 Capability Principles
 
-# 7. Related Documents
+### ARCH-003-P401 — Base Independence
+
+A Base capability shall be independently usable without its corresponding Extended capability.
+
+### ARCH-003-P402 — Extended Dependency
+
+An Extended capability shall build upon its corresponding Base capability.
+
+### ARCH-003-P403 — No Reverse Dependency
+
+A Base capability shall not depend on its corresponding Extended capability.
+
+### ARCH-003-P404 — Lowest-Level Semantic Ownership
+
+AA domain entity shall be defined at the lowest architectural level that requires its independent semantic identity. 
+
+A higher capability shall not redefine an entity whose semantic identity is established at a lower level
+
+### ARCH-003-P405 — Capability Ownership
+
+Each module-level entity shall have exactly one owning capability.
+
+Core Entities are defined by the Core architectural model and are not owned by a module-level capability.
+
+### ARCH-003-P406 — No Parallel Replacement
+
+An Extended capability shall extend the model of its corresponding Base capability rather than create a parallel replacement for foundational concepts.
+
+### ARCH-003-P407 — Encapsulation
+
+A capability shall not directly depend on the internal domain models of another capability.
+
+### ARCH-003-P408 — Contract-Based Integration
+
+Cross-capability information exchange shall use defined integration contracts.
+
+### ARCH-003-P409 — Information Dependency Does Not Imply Ownership
+
+A capability consuming information produced by another capability does not thereby acquire ownership of the underlying domain entity.
+
+### ARCH-003-P410 — Workspace Independence
+
+Workspace organization shall not determine capability or entity ownership.
+
+### ARCH-003-P411 — Base Capability Integration
+
+A Base capability may consume information or services provided by another Base capability through a defined integration contract. Such integration shall not transfer ownership of domain entities or require direct dependency on the internal domain model of the providing capability.
+
+
+
 
 

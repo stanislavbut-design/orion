@@ -1,6 +1,6 @@
-# Stage 1 - Core Domain Foundation
+# Phase 1 - Core Domain Foundation
 
-# Milestone 1.3 — Module Integration Framework
+# Milestone 1.4 — Module Integration Framework
 
 ## Objective
 
