@@ -222,23 +222,21 @@ The Responsibility Center hierarchy shall be maintained as Master Data.
 
 ### RCN-008 — Direct Department Association Optional
 
-A Department may participate in at most one direct Organizational Relationship with a Responsibility Center.
+A Department may have at most one direct Responsibility Center association.
 
 ### RCN-009 — Direct Association Target
 
-A direct Organizational Relationship between a Department and a Responsibility Center shall target a leaf Responsibility Center.
+A direct Department–Responsibility Center association shall target a leaf Responsibility Center.
 
-### RCN-010 — Responsibility Center Inheritance
+### RCN-010 — Responsibility Center Propagation
 
-A Department without a direct Responsibility Center association inherits the Responsibility Center association of its nearest ancestor having a direct association, if any.
-
-A direct association at a higher level of the Department hierarchy applies to all descendant Departments and makes any lower-level direct Responsibility Center associations null and void.
+A direct Responsibility Center association established on a Department shall propagate to all descendant Departments and replace any existing Responsibility Center associations within that subtree.
 
 ### RCN-011 — No Lower-Level Override
 
-A lower-level Department shall not override a Responsibility Center association inherited from a higher-level Department.
+A Responsibility Center association propagated from a higher-level Department shall take precedence over any existing association on descendant Departments.
 
-A lower-level direct association may only be established when no applicable higher-level Department has a direct Responsibility Center association.
+Descendant Departments shall not retain or re-establish conflicting Responsibility Center associations while the propagated association remains in effect.
 
 ### RCN-012 — Cross-Company Scope
 

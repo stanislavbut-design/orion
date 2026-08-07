@@ -5,6 +5,8 @@ from django.db import models
 from django.db.models import Q
 from .person import Person
 
+from ..base.core_entity_base import CoreEntityBase
+
 from apps.core.constants.validation.masterdata import(
     PTY_INDIVIDUAL_PERSON_REQUIRED,
     PTY_PERSON_NOT_ALLOWED,
@@ -15,20 +17,14 @@ class PartyTypes(models.TextChoices):
     LEGAL_ENTITY = "LEGAL_ENTITY", "Legal Entity"
     INDIVIDUAL = "INDIVIDUAL", "Individual"
 
-class Party(models.Model):
+class Party(CoreEntityBase):
 
-    # Duplicated intentionally.
-    # A common base entity will be introduced only after shared
-    # attributes have been validated across multiple domain entities.
-    id = models.BigAutoField(
-        primary_key=True,
-    )
-        
-    public_id = models.UUIDField(
-        default=uuid.uuid4,
+    party_code = models.CharField(
+        max_length=10,
+        blank=True,
+        null=True,
         unique=True,
-        editable=False,
-    )
+    ) 
 
     name = models.CharField(
         max_length=60,
@@ -57,11 +53,6 @@ class Party(models.Model):
     business_id = models.CharField(
         max_length=20,
         blank=False,
-    )
-
-    party_code = models.CharField(
-        max_length=10,
-        blank=True,
     )
 
     class Meta:

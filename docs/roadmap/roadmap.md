@@ -1,6 +1,6 @@
 # Roadmap
 
-# Phase 0 — Foundation ✅ Completed
+# Phase 0 — Foundation ✅ Complete
 
 | Completion Date | 2026-07-17 |
 |----------|-------|
@@ -91,7 +91,8 @@ Orion now has a stable architectural and conceptual foundation from which implem
 |                                        | S01.M01.04.03 Module Integration Pattern ||
 |                                        | S01.M01.04.04 Identity Resolution Service Architecture |
 |                                        | S01.M01.04.05 Module Integration Framework Complete |
-| Milestone 1.5: Architectural Review   | | S01-M01-05-architectural-review.md |
+| Milestone 1.5: Architectural Review   | S01.M01.05.01 Architectural Review | S01-M01-05-architectural-review.md |
+| Milestone 1.6 — Core Model Implementation | S01.M01.06.01 Core Model Implementation | S01-M01-06-core-model.md |
 
 ## Objective
 
@@ -104,7 +105,7 @@ Implement the foundational domain model and application structure defined by Ori
 - The Identity model is implemented.
 - The project is ready for subsequent business modules (CRM, Finance, HR, etc.).
 
-## Milestone 1.1 — Master Data Foundation ✅ COMPLETED
+## Milestone 1.1 — Master Data Foundation ✅ COMPLETE
 
 ### Objective
 
@@ -130,13 +131,13 @@ Create the `masterdata` application and implement the Identity framework.
 - Project starts without errors.
 
 
-## Milestone 1.2 — Business Relationships and Role Participation ✅ COMPLETED
+## Milestone 1.2 — Business Relationships and Role Participation ✅ COMPLETE
 
 ### Objective
 
 Establish the conceptual and technical framework for modelling Business Relationships between Identities.
 
-## Milestone 1.3 — Business Object Architecture and Operational Integration ✅ COMPLETED
+## Milestone 1.3 — Business Object Architecture and Operational Integration ✅ COMPLETE
 
 ### Objective
 
@@ -144,11 +145,26 @@ Establish the Business Object framework without yet implementing any specific bu
 
 The goal is to build the infrastructure that every future document (Employment Agreement, Sales Agreement, Invoice, Purchase Order, etc.) will inherit.
 
-## Milestone 1.4 — Module Integration Framework ✅ COMPLETED
+## Milestone 1.4 — Module Integration Framework ✅ COMPLETE
 
 ### Objective
 
 Define how module-specific entities coexist with the Core Domain while preserving a single source of truth for Core Identities.
 
-## Milestone 1.5: Architectural Review
+## Milestone 1.5: Architectural Review ✅ COMPLETE
+
+### Added Documents
+
+**Architectural Taxonomy**
+
+**Architectural Taxonomy** ARCH-004-taxonomy.md
+
+### Revised Docoments
+
+**Vision v2.0** ARCH-000-vision.md
+**Engineering Principles v1.2** ARCH-001-principles.md
+**Business Domain Model v2.0** ARCH-003-domain-model.md
+
+## Milestone 1.6 — Core Model Implementation
+
 

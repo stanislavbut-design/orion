@@ -1,13 +1,13 @@
-# ARCH-03 — Business Domain Model
+# Business Domain Model
 
 | Property | Value |
 |----------|-------|
 | Document ID | ARCH-03 |
 | Title | Domain Model |
 | Status | Approved |
-| Version | 2.0 |
+| Version | 2.1 |
 | Owner | Orion Project |
-| Last Updated | 2026-08-02 |
+| Last Updated | 2026-08-05 |
 | Depends On | ARCH-000 |
 | Related ADRs | None |
 
@@ -243,6 +243,8 @@ Examples:
 
 A **Department** is a Core Entity representing a persistent organizational unit within a Company.
 
+A Department is structurally associated with exactly one Company. The association may be explicit or inherited through the Department hierarchy.
+
 ### Responsibility Center
 
 A **Responsibility Center** is a Core Entity representing a persistent functional area of accountability within an Organization.
@@ -251,10 +253,9 @@ A **Responsibility Center** is a Core Entity representing a persistent functiona
 
 ## 3.3. Structural Association
 
-A **Structural Association** is a persistent association between Core Entities that exists independently of individual business activities.
+A **Structural Association** is a conceptual business relationship between Core Entities that exists independently of individual business activities. Depending on its nature, it may be implemented either as dedicated domain model or as an explicit reference on Core Entities where that provides a simpler and more efficient representation.
 
 Structural Associations define stable structural context for operational activities.
-
 
 ## 3.3.1. Identity Relationships
 
@@ -304,7 +305,7 @@ Party (ABC Ltd.)
 
 ### 3.3.2. Structural Relationship
 
-A **Structural Relationship** defines the organisational association between Departments and Responsibility Centers.
+A **Structural Relationships** describe persistent structural associations between Core Entities that define the organisational context of the enterprise independently of operational business activities.
 
 Structural Relationships are hierarchical and follow the inheritance rules defined by the participating Core Entities.
 
@@ -640,6 +641,13 @@ Business Relationships connect Core Entities without altering their identity.
 ### ARCH-003-P303
 
 Roles describe functions performed by Core Entities within Business Relationships.
+
+### ARCH-003-P304
+
+Every Core Entity shall have:
+- an internal surrogate identifier `(id)` used for persistence;
+- a stable public identifier `(public_id)` used for external references;
+- zero or more business identifiers defined by the specific entity specification.
 
 ## 4.5 Capability Principles
 

@@ -6,9 +6,9 @@ from django.db import models
 from apps.core.constants.role_types import RoleType
 
 from .business_relationship import BusinessRelationship
-from .organization import Organization
-from .party import Party
-from .person import Person
+from ..organization import Organization
+from ..entities.party import Party
+from ..entities.person import Person
 
 from apps.core.constants.relationship_matrix import (
     ROLE_IDENTITY_MAP,

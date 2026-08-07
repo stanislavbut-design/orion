@@ -8,7 +8,7 @@ from apps.core.constants.validation.masterdata import (
     BRL_INVALID_DATE_RANGE,
 )
 
-from .organization import Organization
+from ..organization import Organization
 
 
 class BusinessRelationship(models.Model):

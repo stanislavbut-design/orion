@@ -163,15 +163,21 @@ A Department shall not be its own Parent Department.
 
 The Department hierarchy shall be maintained as Master Data.
 
-### DEP-008 — Root Department Company Association
+### DEP-008 — Department Company Association
 
 Every root Department shall be associated with exactly one Company through an Organizational Relationship.
 
 ### DEP-009 — Child Department Company Inheritance
 
+Only a root Department may have a direct Company association.
+
 A child Department shall inherit its Company association from its root Department.
 
+A Department that has a parent shall not define its own Company association.
+
 ### DEP-010 — Single Company Membership
+
+A Department hierarchy shall belong to exactly one Company.
 
 Every Department shall belong to exactly one Company, either through a direct Organizational Relationship when it is a root Department or through inherited association when it is a child Department.
 
@@ -179,7 +185,7 @@ Every Department shall belong to exactly one Company, either through a direct Or
 
 A Department may be directly associated with at most one Responsibility Center. 
 
-If a Department has a direct Responsibility Center association, all descendant Departments inherit that association and shall not have direct Responsibility Center associations.
+If a Department has a direct Responsibility Center association, that association shall propagete to all descendant Departments and shall not be overridden at a lower level.
 
 The direct association target shall always be a leaf Responsibility Center.
 

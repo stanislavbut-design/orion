@@ -3,6 +3,8 @@ import uuid
 from django.core.exceptions import ValidationError
 from django.db import models
 
+from ..base.core_entity_base import CoreEntityBase
+
 from apps.core.constants.validation.masterdata import (
     PER_FIRST_NAME_REQUIRED,
     PER_LAST_NAME_REQUIRED,
@@ -19,22 +21,9 @@ from apps.masterdata.constants.naming import (
     SHORT_NAME_FIRST_LAST,
 )
 
-from .organization import Organization
+from ..organization import Organization
 
-class Person(models.Model):
-
-    # Duplicated intentionally.
-    # A common base entity will be introduced only after shared
-    # attributes have been validated across multiple domain entities.
-    id = models.BigAutoField(
-        primary_key=True,
-    )
-        
-    public_id = models.UUIDField(
-        default=uuid.uuid4,
-        unique=True,
-        editable=False,
-    )
+class Person(CoreEntityBase):
 
     first_name = models.CharField(
         max_length=40,
